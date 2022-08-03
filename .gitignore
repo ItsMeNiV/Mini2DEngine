@@ -1,2 +1,5 @@
 .vs/
 /bin/
+*.sln
+*.vcxproj
+*.vcxproj.filters
