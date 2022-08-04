@@ -5,6 +5,9 @@ workspace "Mini2DEngine"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+IncludeDir = {}
+IncludeDir["GLFW"] = "Mini2DEngine/vendor/GLFW/include"
+
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
@@ -38,9 +41,12 @@ project "Sandbox"
 		defines "ME_DIST"
 		optimize "On"
 
+include "Mini2DEngine/vendor/GLFW"
+
 project "Mini2DEngine"
 	location "Mini2DEngine"
-	kind "SharedLib"
+	kind "StaticLib"
+	staticruntime "off"
 	language "C++"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
@@ -51,7 +57,9 @@ project "Mini2DEngine"
 
 	files { "%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp" }
 
-	includedirs { "%{prj.name}/src" }
+	includedirs { "%{prj.name}/src", "%{IncludeDir.GLFW}" }
+
+	links { "GLFW", "opengl32.lib" }
 
 	filter "system:windows"
 		cppdialect "C++17"
@@ -59,11 +67,6 @@ project "Mini2DEngine"
 		systemversion "10.0"
 
 		defines { "ME_PLATFORM_WINDOWS", "ME_BUILD_DLL" }
-
-		postbuildcommands
-		{
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
-		}
 
 	filter "configurations:Debug"
 		defines "ME_DEBUG"

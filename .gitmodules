@@ -1,0 +1,3 @@
+[submodule "Mini2DEngine/vendor/GLFW"]
+	path = Mini2DEngine/vendor/GLFW
+	url = https://github.com/thecherno/glfw

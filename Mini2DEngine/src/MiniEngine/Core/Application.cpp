@@ -5,6 +5,7 @@ namespace MiniEngine
 {
 	Application::Application()
 	{
+		window = std::unique_ptr<Window>(Window::Create());
 	}
 
 	Application::~Application()
@@ -14,6 +15,9 @@ namespace MiniEngine
 	void Application::Run()
 	{
 		std::cout << "Hello from the engine" << std::endl;
-		while (true);
+		while (running)
+		{
+			window->OnUpdate();
+		}
 	}
 }
