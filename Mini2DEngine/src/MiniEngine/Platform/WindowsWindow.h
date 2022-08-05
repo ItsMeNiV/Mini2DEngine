@@ -12,13 +12,21 @@ namespace MiniEngine
 
 		void OnUpdate() override;
 
-		inline unsigned int GetWidth() const override { return width; }
-		inline unsigned int GetHeight() const override { return height; }
+		inline unsigned int GetWidth() const override { return data.width; }
+		inline unsigned int GetHeight() const override { return data.height; }
+
+		void SetEventCallback(const EventCallbackFn& callback) override { data.eventCallback = callback; }
 	
 	private:
-		unsigned int width, height;
-		const char* title;
-
 		GLFWwindow* window;
+
+		struct WindowData
+		{
+			unsigned int width, height;
+			const char* title;
+
+			EventCallbackFn eventCallback;
+		};
+		WindowData data;
 	};
 }

@@ -6,6 +6,8 @@ namespace MiniEngine
 	Application::Application(AppDefinitions& appDef)
 	{
 		window = std::unique_ptr<Window>(Window::Create(appDef.appName, appDef.windowWidth, appDef.windowHeight));
+
+		window->SetEventCallback([this](Event& e) { OnEvent(e); });
 	}
 
 	Application::~Application()
@@ -18,6 +20,13 @@ namespace MiniEngine
 		while (running)
 		{
 			window->OnUpdate();
+		}
+	}
+	void Application::OnEvent(Event& event)
+	{
+		if (event.GetEventCategory() == EventCategory::WindowCloseEventCategory)
+		{
+			running = false;
 		}
 	}
 }

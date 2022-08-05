@@ -19,6 +19,7 @@ namespace MiniEngine
 		virtual ~Application();
 
 		void Run();
+		void OnEvent(Event& event);
 
 	private:
 		bool running = true;

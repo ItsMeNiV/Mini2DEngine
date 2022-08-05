@@ -1,6 +1,8 @@
 #include "mepch.h"
 #include "WindowsWindow.h"
 
+#include "MiniEngine/Event/WindowEvents.h"
+
 #include <GLFW/glfw3.h>
 
 namespace MiniEngine
@@ -15,9 +17,9 @@ namespace MiniEngine
 
 	WindowsWindow::WindowsWindow(const char* title, unsigned int width, unsigned int height)
 	{
-		this->title = title;
-		this->width = width;
-		this->height = height;
+		data.title = title;
+		data.width = width;
+		data.height = height;
 
 		if (!IsGLFWInitialized)
 		{
@@ -28,7 +30,15 @@ namespace MiniEngine
 		}
 		window = glfwCreateWindow(width, height, title, nullptr, nullptr);
 		glfwMakeContextCurrent(window);
+		glfwSetWindowUserPointer(window, &data);
 		glfwSwapInterval(1);
+
+		glfwSetWindowCloseCallback(window, [](GLFWwindow* window)
+		{
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+				WindowCloseEvent event;
+				data.eventCallback(event);
+		});
 	}
 
 	WindowsWindow::~WindowsWindow()
