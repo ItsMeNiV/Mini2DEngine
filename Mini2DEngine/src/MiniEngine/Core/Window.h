@@ -5,7 +5,7 @@
 
 namespace MiniEngine
 {
-	class Window
+	class ME_API Window
 	{
 	public:
 		virtual ~Window() {}

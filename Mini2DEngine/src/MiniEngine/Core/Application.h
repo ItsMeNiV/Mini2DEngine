@@ -5,7 +5,7 @@
 
 namespace MiniEngine
 {
-	class Application
+	class ME_API Application
 	{
 	public:
 		Application();

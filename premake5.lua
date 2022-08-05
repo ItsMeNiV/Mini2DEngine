@@ -18,14 +18,14 @@ project "Sandbox"
 
 	files { "%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp" }
 
-	includedirs { "Mini2DEngine/src" }
+	includedirs { "Mini2DEngine/src", "Mini2DEngine/vendor" }
 
 	links { "Mini2DEngine" }
 
 	filter "system:windows"
 		cppdialect "C++17"
 		staticruntime "On"
-		systemversion "10.0"
+		systemversion "latest"
 
 		defines { "ME_PLATFORM_WINDOWS" }
 
@@ -45,8 +45,7 @@ include "Mini2DEngine/vendor/GLFW"
 
 project "Mini2DEngine"
 	location "Mini2DEngine"
-	kind "StaticLib"
-	staticruntime "off"
+	kind "SharedLib"
 	language "C++"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
@@ -57,6 +56,8 @@ project "Mini2DEngine"
 
 	files { "%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp" }
 
+	defines { "GLFW_INCLUDE_NONE" }
+
 	includedirs { "%{prj.name}/src", "%{IncludeDir.GLFW}" }
 
 	links { "GLFW", "opengl32.lib" }
@@ -64,9 +65,14 @@ project "Mini2DEngine"
 	filter "system:windows"
 		cppdialect "C++17"
 		staticruntime "On"
-		systemversion "10.0"
+		systemversion "latest"
 
 		defines { "ME_PLATFORM_WINDOWS", "ME_BUILD_DLL" }
+
+		postbuildcommands
+		{
+			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+		}
 
 	filter "configurations:Debug"
 		defines "ME_DEBUG"
