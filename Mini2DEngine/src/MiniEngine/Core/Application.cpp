@@ -3,9 +3,9 @@
 
 namespace MiniEngine
 {
-	Application::Application()
+	Application::Application(AppDefinitions& appDef)
 	{
-		window = std::unique_ptr<Window>(Window::Create());
+		window = std::unique_ptr<Window>(Window::Create(appDef.appName, appDef.windowWidth, appDef.windowHeight));
 	}
 
 	Application::~Application()

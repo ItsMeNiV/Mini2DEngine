@@ -3,7 +3,7 @@
 class Sandbox : public MiniEngine::Application
 {
 public:
-	Sandbox()
+	Sandbox(MiniEngine::AppDefinitions& appDef) : Application(appDef)
 	{
 
 	}
@@ -16,5 +16,9 @@ public:
 
 MiniEngine::Application* MiniEngine::CreateApplication()
 {
-	return new Sandbox();
+	AppDefinitions appDef;
+	appDef.appName = "Sandbox";
+	appDef.windowHeight = 720;
+	appDef.windowWidth = 1280;
+	return new Sandbox(appDef);
 }

@@ -5,10 +5,17 @@
 
 namespace MiniEngine
 {
+	struct AppDefinitions
+	{
+		const char* appName;
+		unsigned int windowWidth;
+		unsigned int windowHeight;
+	};
+
 	class ME_API Application
 	{
 	public:
-		Application();
+		Application(AppDefinitions& appDef);
 		virtual ~Application();
 
 		void Run();
