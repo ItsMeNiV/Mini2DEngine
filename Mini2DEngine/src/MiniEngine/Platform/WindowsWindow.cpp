@@ -5,6 +5,7 @@
 #include "MiniEngine/Event/KeyEvents.h"
 
 #include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 namespace MiniEngine
 {
@@ -31,6 +32,12 @@ namespace MiniEngine
 		}
 		window = glfwCreateWindow(width, height, title, nullptr, nullptr);
 		glfwMakeContextCurrent(window);
+		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+		{
+			std::cout << "Failed to initialize GLAD" << std::endl;
+			return;
+		}
+		glViewport(0, 0, width, height);
 		glfwSetWindowUserPointer(window, &data);
 		glfwSwapInterval(1);
 
@@ -44,6 +51,8 @@ namespace MiniEngine
 		glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+				data.width = width;
+				data.height = height;
 				WindowResizeEvent event(width, height);
 				data.eventCallback(event);
 			});
@@ -74,5 +83,10 @@ namespace MiniEngine
 	{
 		glfwPollEvents();
 		glfwSwapBuffers(window);
+	}
+
+	void WindowsWindow::Resize(WindowResizeEvent& resizeEvent)
+	
+		glViewport(0, 0, resizeEvent.GetWidth(), resizeEvent.GetHeight());
 	}
 }

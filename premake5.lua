@@ -7,6 +7,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
 IncludeDir["GLFW"] = "Mini2DEngine/vendor/GLFW/include"
+IncludeDir["Glad"] = "Mini2DEngine/vendor/Glad/include"
 
 project "Sandbox"
 	location "Sandbox"
@@ -43,6 +44,7 @@ project "Sandbox"
 		optimize "On"
 
 include "Mini2DEngine/vendor/GLFW"
+include "Mini2DEngine/vendor/Glad"
 
 project "Mini2DEngine"
 	location "Mini2DEngine"
@@ -59,9 +61,9 @@ project "Mini2DEngine"
 
 	defines { "GLFW_INCLUDE_NONE" }
 
-	includedirs { "%{prj.name}/src", "%{IncludeDir.GLFW}" }
+	includedirs { "%{prj.name}/src", "%{IncludeDir.GLFW}", "%{IncludeDir.Glad}" }
 
-	links { "GLFW", "opengl32.lib" }
+	links { "Glad", "GLFW", "opengl32.lib" }
 
 	filter "system:windows"
 		cppdialect "C++17"

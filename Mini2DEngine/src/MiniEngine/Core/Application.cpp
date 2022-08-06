@@ -46,7 +46,7 @@ namespace MiniEngine
 		}
 		else if (event.GetEventCategory() == EventCategory::WindowResizeEventCategory)
 		{
-			std::cout << "Resizing window.." << std::endl;
+			window->Resize(static_cast<WindowResizeEvent&>(event));
 		}
 	}
 	void Application::PushLayer(Layer* layer)

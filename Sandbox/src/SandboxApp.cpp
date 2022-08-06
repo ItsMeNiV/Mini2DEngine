@@ -18,7 +18,7 @@ public:
 
 	void OnUpdate(float deltaTime) override
 	{
-		std::cout << "Sandbox Layer updated with deltaTime: " << deltaTime << std::endl;
+		//std::cout << "Sandbox Layer updated with deltaTime: " << deltaTime << std::endl;
 	}
 };
 

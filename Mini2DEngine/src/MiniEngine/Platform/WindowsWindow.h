@@ -15,6 +15,7 @@ namespace MiniEngine
 		inline unsigned int GetWidth() const override { return data.width; }
 		inline unsigned int GetHeight() const override { return data.height; }
 		inline void* GetNativeWindow() const { return window; }
+		void Resize(WindowResizeEvent& resizeEvent);
 
 		void SetEventCallback(const EventCallbackFn& callback) override { data.eventCallback = callback; }
 	

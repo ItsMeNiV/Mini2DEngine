@@ -20,6 +20,9 @@ namespace MiniEngine
 		}
 		~WindowResizeEvent() {};
 
+		int GetWidth() { return width; }
+		int GetHeight() { return height; }
+
 	private:
 		int width, height;
 	};
