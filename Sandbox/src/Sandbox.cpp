@@ -1,24 +1,18 @@
-#include "MiniEngine.h"
+#include "Sandbox.h"
 
-class Sandbox : public MiniEngine::Application
+#include <iostream>
+
+void Sandbox::OnAttach()
 {
-public:
-	Sandbox(MiniEngine::AppDefinitions& appDef) : Application(appDef)
-	{
+	std::cout << "Layer attached" << std::endl;
+}
 
-	}
-
-	~Sandbox()
-	{
-
-	}
-};
-
-MiniEngine::Application* MiniEngine::CreateApplication()
+void Sandbox::OnDetach()
 {
-	AppDefinitions appDef;
-	appDef.appName = "Sandbox";
-	appDef.windowHeight = 720;
-	appDef.windowWidth = 1280;
-	return new Sandbox(appDef);
+	std::cout << "Layer detached" << std::endl;
+}
+
+void Sandbox::OnUpdate(float deltaTime)
+{
+	std::cout << "Sandbox Layer updated" << std::endl;
 }

@@ -13,7 +13,14 @@ namespace MiniEngine
 	class WindowResizeEvent : public Event
 	{
 	public:
-		WindowResizeEvent() : Event(EventCategory::WindowResizeEventCategory) {}
+		WindowResizeEvent(int width, int height) : Event(EventCategory::WindowResizeEventCategory)
+		{
+			this->width = width;
+			this->height = height;
+		}
 		~WindowResizeEvent() {};
+
+	private:
+		int width, height;
 	};
 }
