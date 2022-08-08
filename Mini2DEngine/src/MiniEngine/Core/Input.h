@@ -4,7 +4,7 @@
 
 namespace MiniEngine
 {
-	ME_API class Input
+	class Input
 	{
 	public:
 		static bool IsKeyPressed(KeyCode keyCode);

@@ -13,7 +13,7 @@ namespace MiniEngine
 		unsigned int windowHeight;
 	};
 
-	class ME_API Application
+	class Application
 	{
 	public:
 		Application(AppDefinitions& appDef);

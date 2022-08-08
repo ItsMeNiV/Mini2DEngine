@@ -7,7 +7,7 @@
 
 namespace MiniEngine
 {
-	class ME_API Window
+	class Window
 	{
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;

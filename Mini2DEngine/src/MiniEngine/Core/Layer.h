@@ -4,7 +4,7 @@
 
 namespace MiniEngine
 {
-	ME_API class Layer
+	class Layer
 	{
 	public:
 		Layer(const std::string& name = "Layer") {layerName = name; };

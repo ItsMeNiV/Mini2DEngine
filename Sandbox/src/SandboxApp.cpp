@@ -18,7 +18,10 @@ public:
 
 	void OnUpdate(float deltaTime) override
 	{
-		//std::cout << "Sandbox Layer updated with deltaTime: " << deltaTime << std::endl;
+		if (MiniEngine::Input::IsKeyPressed(MiniEngine::Key::W))
+		{
+			std::cout << "W Key pressed!" << std::endl;
+		}
 	}
 };
 

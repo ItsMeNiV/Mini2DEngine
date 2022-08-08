@@ -13,7 +13,8 @@ project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin/int/" .. outputdir .. "/%{prj.name}")
@@ -25,31 +26,35 @@ project "Sandbox"
 	links { "Mini2DEngine" }
 
 	filter "system:windows"
-		cppdialect "C++17"
 		staticruntime "On"
 		systemversion "latest"
 
 		defines { "ME_PLATFORM_WINDOWS" }
 
-	filter "configurations:Debug"
+		filter "configurations:Debug"
 		defines "ME_DEBUG"
-		symbols "On"
+		runtime "Debug"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "ME_RELEASE"
-		optimize "On"
+		runtime "Release"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "ME_DIST"
-		optimize "On"
+		runtime "Release"
+		optimize "on"
 
 include "Mini2DEngine/vendor/GLFW"
 include "Mini2DEngine/vendor/Glad"
 
 project "Mini2DEngine"
 	location "Mini2DEngine"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin/int/" .. outputdir .. "/%{prj.name}")
@@ -66,25 +71,21 @@ project "Mini2DEngine"
 	links { "Glad", "GLFW", "opengl32.lib" }
 
 	filter "system:windows"
-		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
-		defines { "ME_PLATFORM_WINDOWS", "ME_BUILD_DLL" }
-
-		postbuildcommands
-		{
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
-		}
+		defines { "ME_PLATFORM_WINDOWS" }
 
 	filter "configurations:Debug"
 		defines "ME_DEBUG"
-		symbols "On"
+		runtime "Debug"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "ME_RELEASE"
-		optimize "On"
+		runtime "Release"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "ME_DIST"
-		optimize "On"
+		runtime "Release"
+		optimize "on"

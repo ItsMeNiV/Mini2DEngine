@@ -86,7 +86,7 @@ namespace MiniEngine
 	}
 
 	void WindowsWindow::Resize(WindowResizeEvent& resizeEvent)
-	
+	{
 		glViewport(0, 0, resizeEvent.GetWidth(), resizeEvent.GetHeight());
 	}
 }
