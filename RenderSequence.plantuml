@@ -1,0 +1,12 @@
+@startuml
+participant EngineApplication
+participant Application
+participant Renderer2D
+participant Scene2D
+Application->Application : CreateScene(SceneData)
+EngineApplication->Application : OnUpdate()
+Application->Scene2D : SetActive()
+Application->Renderer2D : RenderScene(&Scene)
+Renderer2D->Renderer2D : Render()
+Application->Scene2D : SetInactive()
+@enduml
