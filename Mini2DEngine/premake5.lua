@@ -1,7 +1,8 @@
 IncludeDir = {}
-    IncludeDir["GLFW"] = "%{wks.location}/Mini2DEngine/vendor/GLFW/include"
-    IncludeDir["Glad"] = "%{wks.location}/Mini2DEngine/vendor/Glad/include"
-	IncludeDir["glm"] = "%{wks.location}/Mini2DEngine/vendor/glm"
+    IncludeDir["GLFW"] =		"%{wks.location}/Mini2DEngine/vendor/GLFW/include"
+    IncludeDir["Glad"] =		"%{wks.location}/Mini2DEngine/vendor/Glad/include"
+	IncludeDir["glm"] =			"%{wks.location}/Mini2DEngine/vendor/glm"
+	IncludeDir["stbimage"] =	"%{wks.location}/Mini2DEngine/vendor/stb_image"
 
 project "Mini2DEngine"
 	kind "StaticLib"
@@ -15,11 +16,11 @@ project "Mini2DEngine"
 	pchheader "mepch.h"
 	pchsource "src/mepch.cpp"
 
-	files { "src/**.h", "src/**.cpp", "vendor/glm/glm/**.hpp", "vendor/glm/glm/**.inl", }
+	files { "src/**.h", "src/**.cpp", "vendor/glm/glm/**.hpp", "vendor/glm/glm/**.inl", "vendor/stb_image/**.h", "vendor/stb_image/**.cpp", }
 
 	defines { "GLFW_INCLUDE_NONE" }
 
-	includedirs { "src", "%{IncludeDir.GLFW}", "%{IncludeDir.Glad}", "%{IncludeDir.glm}" }
+	includedirs { "src", "%{IncludeDir.GLFW}", "%{IncludeDir.Glad}", "%{IncludeDir.glm}", "%{IncludeDir.stbimage}" }
 
 	links { "Glad", "GLFW", "opengl32.lib" }
 

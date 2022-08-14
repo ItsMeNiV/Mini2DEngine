@@ -19,7 +19,6 @@ namespace MiniEngine
 		virtual unsigned int GetWidth() const = 0;
 		virtual unsigned int GetHeight() const = 0;
 		virtual void* GetNativeWindow() const = 0;
-		virtual void Resize(WindowResizeEvent& resizeEvent) = 0;
 
 		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 

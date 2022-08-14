@@ -3,6 +3,8 @@
 
 #include "MiniEngine/Event/WindowEvents.h"
 
+#include "MiniEngine/Rendering/Renderer2D.h"
+
 #include "MiniEngine/Utils/PlatformUtils.h"
 
 namespace MiniEngine
@@ -15,11 +17,14 @@ namespace MiniEngine
 
 		window->SetEventCallback([this](Event& e) { OnEvent(e); });
 
+		Renderer2D::Init();
+
 		app = this;
 	}
 
 	Application::~Application()
 	{
+		Renderer2D::Shutdown();
 	}
 
 	void Application::Run()
@@ -46,7 +51,8 @@ namespace MiniEngine
 		}
 		else if (event.GetEventCategory() == EventCategory::WindowResizeEventCategory)
 		{
-			window->Resize(static_cast<WindowResizeEvent&>(event));
+			WindowResizeEvent& e = static_cast<WindowResizeEvent&>(event);
+			Renderer2D::OnWindowResize(e.GetWidth(), e.GetHeight());
 		}
 	}
 	void Application::PushLayer(Layer* layer)
