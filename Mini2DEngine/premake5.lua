@@ -3,6 +3,7 @@ IncludeDir = {}
     IncludeDir["Glad"] =		"%{wks.location}/Mini2DEngine/vendor/Glad/include"
 	IncludeDir["glm"] =			"%{wks.location}/Mini2DEngine/vendor/glm"
 	IncludeDir["stbimage"] =	"%{wks.location}/Mini2DEngine/vendor/stb_image"
+	IncludeDir["box2d"] =		"%{wks.location}/Mini2DEngine/vendor/box2d/include"
 
 project "Mini2DEngine"
 	kind "StaticLib"
@@ -20,9 +21,9 @@ project "Mini2DEngine"
 
 	defines { "GLFW_INCLUDE_NONE" }
 
-	includedirs { "src", "%{IncludeDir.GLFW}", "%{IncludeDir.Glad}", "%{IncludeDir.glm}", "%{IncludeDir.stbimage}" }
+	includedirs { "src", "%{IncludeDir.GLFW}", "%{IncludeDir.Glad}", "%{IncludeDir.glm}", "%{IncludeDir.stbimage}", "%{IncludeDir.box2d}" }
 
-	links { "Glad", "GLFW", "opengl32.lib" }
+	links { "Glad", "GLFW", "opengl32.lib", "box2d" }
 
 	filter "system:windows"
 		systemversion "latest"
