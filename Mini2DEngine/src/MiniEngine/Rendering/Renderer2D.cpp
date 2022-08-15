@@ -87,13 +87,10 @@ namespace MiniEngine
     void Renderer2D::EndScene()
     {
         glm::mat4 model = glm::mat4(1.0f); // Local space -> World space
-        glm::mat4 view = glm::mat4(1.0f); // World Space -> View Space
-        glm::mat4 proj = glm::mat4(1.0f); // View Space -> Clip Space
         //Rotate the model
-        model = glm::scale(model, glm::vec3(100, 100, 100));
         //model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
-        glm::mat4 mvp = rendererData.CameraData.viewProjection;// *model;
+        glm::mat4 mvp = rendererData.CameraData.viewProjection * model;
 
         //Bind textures
         for (uint32_t i = 0; i < rendererData.textureSlotIndex; i++)
@@ -117,6 +114,18 @@ namespace MiniEngine
             rendererData.quadIndexBuffer->Bind();
             RenderCommand::DrawIndexed(rendererData.quadVertexArray, rendererData.quadIndexCount);
         }
+    }
+
+    void Renderer2D::DrawScene(Scene& scene)
+    {
+        BeginScene(scene.GetCamera());
+
+        for (Ref<Entity> e : scene.GetEntities())
+        {
+            DrawQuad(e->GetPosition().x, e->GetPosition().y, e->GetSize().x, e->GetSize().y, e->GetTexture());
+        }
+
+        EndScene();
     }
 
     void Renderer2D::Clear(const glm::vec3 clearColor)

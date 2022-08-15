@@ -9,7 +9,7 @@ namespace MiniEngine
 	class WindowsWindow : public Window
 	{
 	public:
-		WindowsWindow(const char* title, unsigned int width, unsigned int height);
+		WindowsWindow(const char* title, unsigned int width, unsigned int height, bool resizable);
 		virtual ~WindowsWindow();
 
 		void OnUpdate() override;

@@ -6,7 +6,7 @@
 namespace MiniEngine
 {
     OrthographicCamera::OrthographicCamera(unsigned int screenWidth, unsigned int screenHeight)
-        : OrthographicCamera(-((float)screenWidth / (float)screenHeight), ((float)screenWidth / (float)screenHeight), -1.0f, 1.0f) {}
+        : OrthographicCamera(0.0f, (float)screenWidth, 0.0f, screenHeight) {}
 
     OrthographicCamera::OrthographicCamera(float left, float right, float bottom, float top)
         : projectionMatrix(glm::ortho(left, right, bottom, top, -1.0f, 1.0f)), viewMatrix(1.0f)

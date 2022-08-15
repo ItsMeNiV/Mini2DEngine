@@ -13,7 +13,7 @@ namespace MiniEngine
 
 	Application::Application(AppDefinitions& appDef)
 	{
-		window = std::unique_ptr<Window>(Window::Create(appDef.appName, appDef.windowWidth, appDef.windowHeight));
+		window = std::unique_ptr<Window>(Window::Create(appDef.appName, appDef.windowWidth, appDef.windowHeight, appDef.resizable));
 
 		window->SetEventCallback([this](Event& e) { OnEvent(e); });
 

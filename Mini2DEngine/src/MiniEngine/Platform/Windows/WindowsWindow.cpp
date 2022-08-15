@@ -11,12 +11,12 @@ namespace MiniEngine
 
 	static bool IsGLFWInitialized = false;
 
-	Window* Window::Create(const char* title, unsigned int width, unsigned int height)
+	Window* Window::Create(const char* title, unsigned int width, unsigned int height, bool resizable)
 	{
-		return new WindowsWindow(title, width, height);
+		return new WindowsWindow(title, width, height, resizable);
 	}
 
-	WindowsWindow::WindowsWindow(const char* title, unsigned int width, unsigned int height)
+	WindowsWindow::WindowsWindow(const char* title, unsigned int width, unsigned int height, bool resizable)
 	{
 		data.title = title;
 		data.width = width;
@@ -29,6 +29,7 @@ namespace MiniEngine
 				IsGLFWInitialized = true;
 			}
 		}
+		//TODO Set resizable
 		window = glfwCreateWindow(width, height, title, nullptr, nullptr);
 		context = GraphicsContext::Create(window);
 		context->Init();

@@ -22,7 +22,7 @@ namespace MiniEngine
 
 		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 
-		static Window* Create(const char* windowTitle = "MiniEngine", unsigned int width = 1280, unsigned int height = 720);
+		static Window* Create(const char* windowTitle = "MiniEngine", unsigned int width = 1280, unsigned int height = 720, bool resizable = true);
 
 	};
 }

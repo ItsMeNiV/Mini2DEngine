@@ -9,7 +9,5 @@
 #include "MiniEngine/Rendering/RenderCommand.h"
 #include "MiniEngine/Rendering/OrthographicCamera.h"
 #include "MiniEngine/Rendering/Texture.h"
-
-//---------------Entry Point---------------
-#include "MiniEngine/Core/EntryPoint.h"
-//---------------Entry Point---------------
+#include "MiniEngine/Rendering/Scene.h"
+#include "MiniEngine/Rendering/Entity.h"

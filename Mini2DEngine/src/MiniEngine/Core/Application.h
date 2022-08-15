@@ -11,6 +11,7 @@ namespace MiniEngine
 		const char* appName;
 		unsigned int windowWidth;
 		unsigned int windowHeight;
+		bool resizable;
 	};
 
 	class Application
