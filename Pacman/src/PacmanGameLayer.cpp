@@ -10,15 +10,16 @@ namespace PacmanGame
     {
         camera = MiniEngine::CreateRef<MiniEngine::OrthographicCamera>(800, 600);
         scene = MiniEngine::CreateRef<MiniEngine::Scene>(*camera);
+        gameLevel = MiniEngine::CreateRef<Level>();
     }
 
     void PacmanGameLayer::OnAttach()
     {
-        Level level;
         MiniEngine::Ref<MiniEngine::Texture> backgroundTexture = MiniEngine::Texture::Create("assets/pictures/background.png");
         MiniEngine::Ref<MiniEngine::Entity> background = MiniEngine::CreateRef<MiniEngine::Entity>(0.0f, 0.0f, 800.0f, 600.0f, backgroundTexture);
         scene->AddEntity(background);
-        scene->AddEntity(MiniEngine::CreateRef<Pacman>(20.0f, 20.0f));
+        gameLevel->CreateCoinAndPowerupEntities(scene);
+        scene->AddEntity(MiniEngine::CreateRef<Pacman>(380.0f, 140.0f));
     }
 
     void PacmanGameLayer::OnDetach()

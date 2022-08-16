@@ -1,4 +1,5 @@
 #pragma once
+#include <MiniEngine.h>
 
 namespace PacmanGame
 {
@@ -9,6 +10,7 @@ namespace PacmanGame
     struct Cell
     {
         CellType type;
+        uint8_t x, y;
     };
 
 	class Level
@@ -16,7 +18,9 @@ namespace PacmanGame
 	public:
 		Level();
 
+        void CreateCoinAndPowerupEntities(MiniEngine::Ref<MiniEngine::Scene> scene);
+
 	private:
-		Cell levelCells[30 * 40] = {}; //30 * 40 cells at 20px*20px = 800*600
+        Cell levelCells[30 * 40]; //30 * 40 cells at 20px*20px = 800*600
 	};
 }
