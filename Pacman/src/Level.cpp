@@ -40,13 +40,24 @@ namespace PacmanGame
         }
 
     }
-    void Level::CreateCoinAndPowerupEntities(MiniEngine::Ref<MiniEngine::Scene> scene)
+    void Level::CreateCoinAndPowerupEntities(MiniEngine::Ref<MiniEngine::Scene>& scene)
     {
         MiniEngine::Ref<MiniEngine::Texture> coinTexture = MiniEngine::Texture::Create("assets/pictures/coin.png");
+        uint8_t i = 0;
         for (Cell c : levelCells)
         {
             if (c.type == CellType::Coin)
-                scene->AddEntity(MiniEngine::CreateRef<MiniEngine::Entity>(800 - 20 - c.x * 20.0f, 600 - 20 - c.y * 20.0f, 20.0f, 20.0f, coinTexture));
+                scene->AddEntity(MiniEngine::CreateRef<MiniEngine::Entity>(std::string("Coin" + i), 800 - 20 - c.x * 20.0f, 600 - 20 - c.y * 20.0f, 20.0f, 20.0f, coinTexture));
+            i++;
         }
+    }
+    Cell& Level::GetPacmanSpawnCell()
+    {
+        for (Cell c : levelCells)
+        {
+            if (c.type == CellType::PacmanSpawn)
+                return c;
+        }
+        return levelCells[0];
     }
 }
