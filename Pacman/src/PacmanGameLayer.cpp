@@ -1,6 +1,7 @@
 #include "PacmanGameLayer.h"
 #include "MiniEngine.h"
 #include "entities/Pacman.h"
+#include "Level.h"
 
 namespace PacmanGame
 {
@@ -13,6 +14,7 @@ namespace PacmanGame
 
     void PacmanGameLayer::OnAttach()
     {
+        Level level;
         MiniEngine::Ref<MiniEngine::Texture> backgroundTexture = MiniEngine::Texture::Create("assets/pictures/background.png");
         MiniEngine::Ref<MiniEngine::Entity> background = MiniEngine::CreateRef<MiniEngine::Entity>(0.0f, 0.0f, 800.0f, 600.0f, backgroundTexture);
         scene->AddEntity(background);
