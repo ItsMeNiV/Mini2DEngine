@@ -66,7 +66,8 @@ namespace MiniEngine
         }
 
         rendererData.quadIndexBuffer = IndexBuffer::Create(quadIndices, rendererData.maxIndices);
-        rendererData.quadIndexBuffer->Bind();
+        rendererData.quadVertexArray->SetIndexBuffer(rendererData.quadIndexBuffer);
+        delete[] quadIndices;
 
         rendererData.quadShader = Shader::Create("assets/shaders/VertexShader.vert", "assets/shaders/FragmentShader.frag");
     }

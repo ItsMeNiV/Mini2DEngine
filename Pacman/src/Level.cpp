@@ -3,11 +3,14 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <format>
 
 namespace PacmanGame
 {
     Level::Level()
     {
+        levelCellsPtrBase = new Cell[30 * 40]; //30 * 40 cells at 20px*20px = 800*600
+        levelCellsPtr = levelCellsPtrBase;
         std::string filename("assets/level.txt");
         std::vector<char> bytes;
         char byte = 0;
@@ -24,40 +27,51 @@ namespace PacmanGame
         }
         input_file.close();
 
-        for (size_t i = 0; i < bytes.size(); i++) {
-            uint8_t x = i % 40;
-            uint8_t y = i / 40;
-            if (bytes[i] == 'X')
-                levelCells[i] = { CellType::Wall, x, y };
-            else if (bytes[i] == 'O')
-                levelCells[i] = { CellType::Coin, x, y };
-            else if (bytes[i] == 'P')
-                levelCells[i] = { CellType::PacmanSpawn, x, y };
-            else if (bytes[i] == 'G')
-                levelCells[i] = { CellType::GhostSpawn, x, y };
-            else if (bytes[i] == 'U')
-                levelCells[i] = { CellType::PowerUp, x, y };
+        uint16_t index = 0;
+        for (std::vector<char>::reverse_iterator i = bytes.rbegin(); i != bytes.rend(); ++i)
+        {
+            uint8_t x = index % 40;
+            uint8_t y = index / 40;
+            if (*i == 'X')
+                *levelCellsPtr = { CellType::Wall, x, y };
+            else if (*i == 'O')
+                *levelCellsPtr = { CellType::Coin, x, y };
+            else if (*i == 'P')
+                *levelCellsPtr = { CellType::PacmanSpawn, x, y };
+            else if (*i == 'G')
+                *levelCellsPtr = { CellType::GhostSpawn, x, y };
+            else if (*i == 'U')
+                *levelCellsPtr = { CellType::PowerUp, x, y };
+
+            levelCellsPtr++;
+            index++;
         }
 
     }
+
     void Level::CreateCoinAndPowerupEntities(MiniEngine::Ref<MiniEngine::Scene>& scene)
     {
         MiniEngine::Ref<MiniEngine::Texture> coinTexture = MiniEngine::Texture::Create("assets/pictures/coin.png");
-        uint8_t i = 0;
-        for (Cell c : levelCells)
+        for (uint16_t i = 0; i <= 30*40; i++)
         {
+            Cell c = levelCellsPtrBase[i];
             if (c.type == CellType::Coin)
-                scene->AddEntity(MiniEngine::CreateRef<MiniEngine::Entity>(std::string("Coin" + i), 800 - 20 - c.x * 20.0f, 600 - 20 - c.y * 20.0f, 20.0f, 20.0f, coinTexture));
-            i++;
+            {
+                MiniEngine::Ref<MiniEngine::Entity> coin = MiniEngine::CreateRef<MiniEngine::Entity>(std::string("Coin") + std::to_string(i), c.x * 20.0f, c.y * 20.0f, 20.0f, 20.0f, coinTexture);
+                scene->AddEntity(coin);
+            }
         }
     }
-    Cell& Level::GetPacmanSpawnCell()
+
+    Cell Level::GetPacmanSpawnCell()
     {
-        for (Cell c : levelCells)
+        for (uint16_t i = 0; i <= 30*40; i++)
         {
+            Cell c = levelCellsPtrBase[i];
+
             if (c.type == CellType::PacmanSpawn)
                 return c;
         }
-        return levelCells[0];
+        return *levelCellsPtrBase;
     }
 }

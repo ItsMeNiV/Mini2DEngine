@@ -19,9 +19,10 @@ namespace PacmanGame
 		Level();
 
         void CreateCoinAndPowerupEntities(MiniEngine::Ref<MiniEngine::Scene>& scene);
-        Cell& GetPacmanSpawnCell();
+        Cell GetPacmanSpawnCell();
 
 	private:
-        Cell levelCells[30 * 40]; //30 * 40 cells at 20px*20px = 800*600
+        Cell* levelCellsPtrBase = nullptr;
+        Cell* levelCellsPtr = nullptr;
 	};
 }

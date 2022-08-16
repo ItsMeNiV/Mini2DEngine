@@ -4,7 +4,7 @@
 class GoldCube : public MiniEngine::Entity
 {
 public:
-    GoldCube(float x, float y, float sizeX, float sizeY, MiniEngine::Ref<MiniEngine::Texture> texture) : Entity(x, y, sizeX, sizeY, texture) {}
+    GoldCube(float x, float y, float sizeX, float sizeY, MiniEngine::Ref<MiniEngine::Texture> texture) : Entity(std::string(""), x, y, sizeX, sizeY, texture) {}
 
     void OnUpdate(float deltaTime) override
     {
