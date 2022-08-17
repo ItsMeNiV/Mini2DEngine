@@ -1,6 +1,7 @@
 #pragma once
 #include "MiniEngine.h"
 #include "Level.h"
+#include "entities/Pacman.h"
 
 namespace PacmanGame
 {
@@ -20,5 +21,6 @@ namespace PacmanGame
         MiniEngine::Ref<MiniEngine::OrthographicCamera> camera;
         MiniEngine::Ref<MiniEngine::Scene> scene;
         MiniEngine::Ref<Level> gameLevel;
+        MiniEngine::Ref<Pacman> pacmanEntity;
     };
 }

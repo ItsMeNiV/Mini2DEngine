@@ -3,7 +3,6 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <format>
 
 namespace PacmanGame
 {
@@ -52,6 +51,7 @@ namespace PacmanGame
     void Level::CreateCoinAndPowerupEntities(MiniEngine::Ref<MiniEngine::Scene>& scene)
     {
         MiniEngine::Ref<MiniEngine::Texture> coinTexture = MiniEngine::Texture::Create("assets/pictures/coin.png");
+        MiniEngine::Ref<MiniEngine::Texture> powerUpTexture = MiniEngine::Texture::Create("assets/pictures/powerup.png");
         for (uint16_t i = 0; i <= 30*40; i++)
         {
             Cell c = levelCellsPtrBase[i];
@@ -59,6 +59,11 @@ namespace PacmanGame
             {
                 MiniEngine::Ref<MiniEngine::Entity> coin = MiniEngine::CreateRef<MiniEngine::Entity>(std::string("Coin") + std::to_string(i), c.x * 20.0f, c.y * 20.0f, 20.0f, 20.0f, coinTexture);
                 scene->AddEntity(coin);
+            }
+            if (c.type == CellType::PowerUp)
+            {
+                MiniEngine::Ref<MiniEngine::Entity> powerUp = MiniEngine::CreateRef<MiniEngine::Entity>(std::string("PowerUp") + std::to_string(i), c.x * 20.0f, c.y * 20.0f, 20.0f, 20.0f, powerUpTexture);
+                scene->AddEntity(powerUp);
             }
         }
     }
@@ -73,5 +78,22 @@ namespace PacmanGame
                 return c;
         }
         return *levelCellsPtrBase;
+    }
+
+    void Level::checkPacmanWallCollision(MiniEngine::Ref<Pacman> pacmanEntity)
+    {
+        uint16_t cellX = (uint16_t)pacmanEntity->GetPosition().x / 20;
+        uint16_t cellY = (uint16_t)pacmanEntity->GetPosition().y / 20;
+
+        if (pacmanEntity->GetDirection() == glm::vec2(0.0f, 1.0f)) // Up
+            cellY += 1;
+        else if (pacmanEntity->GetDirection() == glm::vec2(1.0f, 0.0f)) // Right
+            cellX += 1;
+
+        Cell collisionCheckCell = levelCellsPtrBase[cellY * 40 + cellX];
+
+        if (collisionCheckCell.type == CellType::Wall)
+            pacmanEntity->OnWallCollision({ collisionCheckCell.x * 20.0f, collisionCheckCell.y * 20.0f });
+
     }
 }

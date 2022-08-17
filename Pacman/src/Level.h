@@ -1,5 +1,6 @@
 #pragma once
 #include <MiniEngine.h>
+#include "entities/Pacman.h"
 
 namespace PacmanGame
 {
@@ -20,6 +21,7 @@ namespace PacmanGame
 
         void CreateCoinAndPowerupEntities(MiniEngine::Ref<MiniEngine::Scene>& scene);
         Cell GetPacmanSpawnCell();
+        void checkPacmanWallCollision(MiniEngine::Ref<Pacman> pacman);
 
 	private:
         Cell* levelCellsPtrBase = nullptr;
