@@ -43,12 +43,21 @@ namespace PacmanGame
 
 	void Pacman::OnWallCollision(glm::vec2 wallPos)
 	{
-		if (justChangedDirection)
-		{
-			direction = prevDirection;
-		}
 		glm::vec2& pos = this->GetPosition();
-		pos = wallPos - 20.0f * direction;
+
+		if (direction == glm::vec2(0.0f, 1.0f)) // Up
+			pos.y = wallPos.y - 20.0f;
+        if (direction == glm::vec2(-1.0f, 0.0f)) // Left
+            pos.x = wallPos.x + 20.0f;
+        if (direction == glm::vec2(0.0f, -1.0f)) // Down
+            pos.y = wallPos.y + 20.0f;
+		if (direction == glm::vec2(1.0f, 0.0f)) // Right
+			pos.x = wallPos.x - 20.0;
+
+        if (justChangedDirection)
+        {
+            direction = prevDirection;
+        }
 	}
 
 }

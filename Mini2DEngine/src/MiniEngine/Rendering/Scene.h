@@ -14,6 +14,14 @@ namespace MiniEngine
         std::vector<Ref<Entity>> GetEntities() const { return entities; }
         OrthographicCamera& GetCamera() const { return camera; }
 
+        void RemoveEntity(std::string entityId)
+        {
+            entities.erase(std::remove_if(begin(entities), end(entities), [entityId](Ref<Entity> e)
+                {
+                    return e->GetEntityId() == entityId;
+                }), entities.end());
+        }
+
         void OnUpdate(float deltaTime)
         {
             for (Ref<Entity> e : entities)

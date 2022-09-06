@@ -35,6 +35,8 @@ namespace PacmanGame
         scene->OnUpdate(deltaTime);
 
         gameLevel->checkPacmanWallCollision(pacmanEntity);
+        gameLevel->checkPacmanCoinCollision(pacmanEntity, scene);
+        gameLevel->checkPacmanPowerUpCollision(pacmanEntity, scene);
 
         MiniEngine::Renderer2D::DrawScene(*scene);
     }

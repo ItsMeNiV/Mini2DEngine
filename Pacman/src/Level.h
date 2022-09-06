@@ -10,6 +10,7 @@ namespace PacmanGame
     };
     struct Cell
     {
+        std::string id;
         CellType type;
         uint8_t x, y;
     };
@@ -21,7 +22,9 @@ namespace PacmanGame
 
         void CreateCoinAndPowerupEntities(MiniEngine::Ref<MiniEngine::Scene>& scene);
         Cell GetPacmanSpawnCell();
-        void checkPacmanWallCollision(MiniEngine::Ref<Pacman> pacman);
+        void checkPacmanWallCollision(MiniEngine::Ref<Pacman> pacmanEntity);
+        void checkPacmanCoinCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene);
+        void checkPacmanPowerUpCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene);
 
 	private:
         Cell* levelCellsPtrBase = nullptr;

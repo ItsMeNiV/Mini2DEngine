@@ -32,15 +32,15 @@ namespace PacmanGame
             uint8_t x = index % 40;
             uint8_t y = index / 40;
             if (*i == 'X')
-                *levelCellsPtr = { CellType::Wall, x, y };
+                *levelCellsPtr = { "", CellType::Wall, x, y};
             else if (*i == 'O')
-                *levelCellsPtr = { CellType::Coin, x, y };
+                *levelCellsPtr = { "", CellType::Coin, x, y };
             else if (*i == 'P')
-                *levelCellsPtr = { CellType::PacmanSpawn, x, y };
+                *levelCellsPtr = { "", CellType::PacmanSpawn, x, y };
             else if (*i == 'G')
-                *levelCellsPtr = { CellType::GhostSpawn, x, y };
+                *levelCellsPtr = { "", CellType::GhostSpawn, x, y };
             else if (*i == 'U')
-                *levelCellsPtr = { CellType::PowerUp, x, y };
+                *levelCellsPtr = { "", CellType::PowerUp, x, y };
 
             levelCellsPtr++;
             index++;
@@ -54,16 +54,18 @@ namespace PacmanGame
         MiniEngine::Ref<MiniEngine::Texture> powerUpTexture = MiniEngine::Texture::Create("assets/pictures/powerup.png");
         for (uint16_t i = 0; i <= 30*40; i++)
         {
-            Cell c = levelCellsPtrBase[i];
+            Cell& c = levelCellsPtrBase[i];
             if (c.type == CellType::Coin)
             {
                 MiniEngine::Ref<MiniEngine::Entity> coin = MiniEngine::CreateRef<MiniEngine::Entity>(std::string("Coin") + std::to_string(i), c.x * 20.0f, c.y * 20.0f, 20.0f, 20.0f, coinTexture);
                 scene->AddEntity(coin);
+                c.id = coin->GetEntityId();
             }
             if (c.type == CellType::PowerUp)
             {
                 MiniEngine::Ref<MiniEngine::Entity> powerUp = MiniEngine::CreateRef<MiniEngine::Entity>(std::string("PowerUp") + std::to_string(i), c.x * 20.0f, c.y * 20.0f, 20.0f, 20.0f, powerUpTexture);
                 scene->AddEntity(powerUp);
+                c.id = powerUp->GetEntityId();
             }
         }
     }
@@ -95,5 +97,34 @@ namespace PacmanGame
         if (collisionCheckCell.type == CellType::Wall)
             pacmanEntity->OnWallCollision({ collisionCheckCell.x * 20.0f, collisionCheckCell.y * 20.0f });
 
+    }
+
+    void Level::checkPacmanCoinCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene)
+    {
+        uint16_t cellX = (uint16_t)pacmanEntity->GetPosition().x / 20;
+        uint16_t cellY = (uint16_t)pacmanEntity->GetPosition().y / 20;
+
+        Cell collisionCheckCell = levelCellsPtrBase[cellY * 40 + cellX];
+
+        if (collisionCheckCell.type == CellType::Coin)
+        {
+            collisionCheckCell.type = CellType::Empty;
+            
+            scene->RemoveEntity(collisionCheckCell.id);
+        }
+    }
+
+    void Level::checkPacmanPowerUpCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene)
+    {
+        uint16_t cellX = (uint16_t)pacmanEntity->GetPosition().x / 20;
+        uint16_t cellY = (uint16_t)pacmanEntity->GetPosition().y / 20;
+
+        Cell collisionCheckCell = levelCellsPtrBase[cellY * 40 + cellX];
+
+        if (collisionCheckCell.type == CellType::PowerUp)
+        {
+            collisionCheckCell.type = CellType::Empty;
+            scene->RemoveEntity(collisionCheckCell.id);
+        }
     }
 }
