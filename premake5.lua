@@ -5,7 +5,6 @@ workspace "Mini2DEngine"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
-include "Sandbox"
 include "Pacman"
 
 group "Dependencies"
