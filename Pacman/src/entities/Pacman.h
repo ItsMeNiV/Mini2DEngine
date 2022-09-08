@@ -17,6 +17,7 @@ namespace PacmanGame
         const float speed = 100.0f;
         glm::vec2 direction;
         glm::vec2 prevDirection;
+        MiniEngine::KeyCode bufferedInput;
         float prevRotation;
         bool justChangedDirection = false;
     };
