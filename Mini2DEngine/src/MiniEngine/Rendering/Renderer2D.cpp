@@ -123,7 +123,7 @@ namespace MiniEngine
 
         for (Ref<Entity> e : scene.GetEntities())
         {
-            DrawQuad(e->GetPosition().x, e->GetPosition().y, e->GetSize().x, e->GetSize().y, e->GetTexture());
+            DrawQuad(e->GetPosition().x, e->GetPosition().y, e->GetSize().x, e->GetSize().y, e->GetRotation(), e->GetTexture());
         }
 
         EndScene();
@@ -137,26 +137,29 @@ namespace MiniEngine
 
     void Renderer2D::DrawQuad(float x, float y, float sizeX, float sizeY)
     {
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), { x, y, 0.0f })
+            * glm::scale(glm::mat4(1.0f), { sizeX, sizeY, 1.0f });
+
         //Vec1
-        rendererData.quadVertexBufferPtr->Position = { x, y, 0.0f };
+        rendererData.quadVertexBufferPtr->Position = transform * glm::vec4(-0.5f, -0.5f, 0.0f, 1.0f);
         rendererData.quadVertexBufferPtr->TexCoords = { 0.0f, 0.0f };
         rendererData.quadVertexBufferPtr->TexIndex = 0.0f;
         rendererData.quadVertexBufferPtr++;
 
         //Vec2
-        rendererData.quadVertexBufferPtr->Position = { x + sizeX,  y, 0.0f };
+        rendererData.quadVertexBufferPtr->Position = transform * glm::vec4(0.5f, -0.5f, 0.0f, 1.0f);
         rendererData.quadVertexBufferPtr->TexCoords = { 1.0f, 0.0f };
         rendererData.quadVertexBufferPtr->TexIndex = 0.0f;
         rendererData.quadVertexBufferPtr++;
 
         //Vec3
-        rendererData.quadVertexBufferPtr->Position = { x + sizeX, y + sizeY, 0.0f };
+        rendererData.quadVertexBufferPtr->Position = transform * glm::vec4(0.5f, 0.5f, 0.0f, 1.0f);
         rendererData.quadVertexBufferPtr->TexCoords = { 1.0f, 1.0f };
         rendererData.quadVertexBufferPtr->TexIndex = 0.0f;
         rendererData.quadVertexBufferPtr++;
 
         //Vec4
-        rendererData.quadVertexBufferPtr->Position = { x, y + sizeY, 0.0f };
+        rendererData.quadVertexBufferPtr->Position = transform * glm::vec4(-0.5f, 0.5f, 0.0f, 1.0f);
         rendererData.quadVertexBufferPtr->TexCoords = { 0.0f, 1.0f };
         rendererData.quadVertexBufferPtr->TexIndex = 0.0f;
         rendererData.quadVertexBufferPtr++;
@@ -164,8 +167,12 @@ namespace MiniEngine
         rendererData.quadIndexCount += 6;
     }
 
-    void Renderer2D::DrawQuad(float x, float y, float sizeX, float sizeY, Ref<Texture>& texture)
+    void Renderer2D::DrawQuad(float x, float y, float sizeX, float sizeY, float rotation, Ref<Texture>& texture)
     {
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), { x, y, 0.0f })
+            * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), {0.0f, 0.0f, 1.0f})
+            * glm::scale(glm::mat4(1.0f), { sizeX, sizeY, 1.0f });
+
         float textureIndex = -1.0f;
         for (uint32_t i = 0; i < rendererData.textureSlotIndex; i++)
         {
@@ -183,25 +190,25 @@ namespace MiniEngine
         }
 
         //Vec1
-        rendererData.quadVertexBufferPtr->Position = { x, y, 0.0f };
+        rendererData.quadVertexBufferPtr->Position = transform * glm::vec4(-0.5f, -0.5f, 0.0f, 1.0f);
         rendererData.quadVertexBufferPtr->TexCoords = { 0.0f, 0.0f };
         rendererData.quadVertexBufferPtr->TexIndex = textureIndex;
         rendererData.quadVertexBufferPtr++;
 
         //Vec2
-        rendererData.quadVertexBufferPtr->Position = { x + sizeX,  y, 0.0f };
+        rendererData.quadVertexBufferPtr->Position = transform * glm::vec4(0.5f, -0.5f, 0.0f, 1.0f);
         rendererData.quadVertexBufferPtr->TexCoords = { 1.0f, 0.0f };
         rendererData.quadVertexBufferPtr->TexIndex = textureIndex;
         rendererData.quadVertexBufferPtr++;
 
         //Vec3
-        rendererData.quadVertexBufferPtr->Position = { x + sizeX, y + sizeY, 0.0f };
+        rendererData.quadVertexBufferPtr->Position = transform * glm::vec4(0.5f, 0.5f, 0.0f, 1.0f);
         rendererData.quadVertexBufferPtr->TexCoords = { 1.0f, 1.0f };
         rendererData.quadVertexBufferPtr->TexIndex = textureIndex;
         rendererData.quadVertexBufferPtr++;
 
         //Vec4
-        rendererData.quadVertexBufferPtr->Position = { x, y + sizeY, 0.0f };
+        rendererData.quadVertexBufferPtr->Position = transform * glm::vec4(-0.5f, 0.5f, 0.0f, 1.0f);
         rendererData.quadVertexBufferPtr->TexCoords = { 0.0f, 1.0f };
         rendererData.quadVertexBufferPtr->TexIndex = textureIndex;
         rendererData.quadVertexBufferPtr++;

@@ -31,6 +31,6 @@ namespace MiniEngine
         static void EndScene();
         static void Clear(const glm::vec3 clearColor = { 0.3f, 0.3f, 0.3f });
         static void DrawQuad(float x, float y, float sizeX, float sizeY);
-        static void DrawQuad(float x, float y, float sizeX, float sizeY, Ref<Texture>& texture);
+        static void DrawQuad(float x, float y, float sizeX, float sizeY, float rotation, Ref<Texture>& texture);
     };
 }

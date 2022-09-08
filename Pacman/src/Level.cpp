@@ -57,13 +57,13 @@ namespace PacmanGame
             Cell& c = levelCellsPtrBase[i];
             if (c.type == CellType::Coin)
             {
-                MiniEngine::Ref<MiniEngine::Entity> coin = MiniEngine::CreateRef<MiniEngine::Entity>(std::string("Coin") + std::to_string(i), c.x * 20.0f, c.y * 20.0f, 20.0f, 20.0f, coinTexture);
+                MiniEngine::Ref<MiniEngine::Entity> coin = MiniEngine::CreateRef<MiniEngine::Entity>(std::string("Coin") + std::to_string(i), c.x * 20.0f + 10.0f, c.y * 20.0f + 10.0f, 20.0f, 20.0f, 0.0f, coinTexture);
                 scene->AddEntity(coin);
                 c.id = coin->GetEntityId();
             }
             if (c.type == CellType::PowerUp)
             {
-                MiniEngine::Ref<MiniEngine::Entity> powerUp = MiniEngine::CreateRef<MiniEngine::Entity>(std::string("PowerUp") + std::to_string(i), c.x * 20.0f, c.y * 20.0f, 20.0f, 20.0f, powerUpTexture);
+                MiniEngine::Ref<MiniEngine::Entity> powerUp = MiniEngine::CreateRef<MiniEngine::Entity>(std::string("PowerUp") + std::to_string(i), c.x * 20.0f + 10.0f, c.y * 20.0f + 10.0f, 20.0f, 20.0f, 0.0f, powerUpTexture);
                 scene->AddEntity(powerUp);
                 c.id = powerUp->GetEntityId();
             }
@@ -84,8 +84,8 @@ namespace PacmanGame
 
     void Level::checkPacmanWallCollision(MiniEngine::Ref<Pacman> pacmanEntity)
     {
-        uint16_t cellX = (uint16_t)pacmanEntity->GetPosition().x / 20;
-        uint16_t cellY = (uint16_t)pacmanEntity->GetPosition().y / 20;
+        uint16_t cellX = (uint16_t)(pacmanEntity->GetPosition().x - 10.0f) / 20;
+        uint16_t cellY = (uint16_t)(pacmanEntity->GetPosition().y - 10.0f) / 20;
 
         if (pacmanEntity->GetDirection() == glm::vec2(0.0f, 1.0f)) // Up
             cellY += 1;
@@ -95,7 +95,7 @@ namespace PacmanGame
         Cell collisionCheckCell = levelCellsPtrBase[cellY * 40 + cellX];
 
         if (collisionCheckCell.type == CellType::Wall)
-            pacmanEntity->OnWallCollision({ collisionCheckCell.x * 20.0f, collisionCheckCell.y * 20.0f });
+            pacmanEntity->OnWallCollision({ collisionCheckCell.x * 20.0f + 10.0f, collisionCheckCell.y * 20.0f + 10.0f });
 
     }
 
