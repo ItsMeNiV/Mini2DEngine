@@ -11,3 +11,5 @@
 #include "MiniEngine/Rendering/Texture.h"
 #include "MiniEngine/Rendering/Scene.h"
 #include "MiniEngine/Rendering/Entity.h"
+#include "MiniEngine/Utils/Statemachine/StateBase.h"
+#include "MiniEngine/Utils/Statemachine/StatefulContext.h"

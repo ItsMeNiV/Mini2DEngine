@@ -1,14 +1,24 @@
 #include "Pacman.h"
 #include "MiniEngine.h"
+#include "StateOn.h"
+#include "StateOff.h"
 
 namespace PacmanGame
 {
 
 	Pacman::Pacman(float x, float y, MiniEngine::Ref<MiniEngine::Texture> texture) : MiniEngine::Entity("Pacman", x, y, 20.0f, 20.0f, 0.0f, texture),
-		direction(0.0f, 0.0f), prevDirection(0.0f, 0.0f), bufferedInput(MiniEngine::Key::SPACE) {}
+		direction(0.0f, 0.0f), prevDirection(0.0f, 0.0f), bufferedInput(MiniEngine::Key::SPACE)
+	{
+		StatePacman* initialState = new StateOn();
+		SetState(*initialState);
+		initialState->SetContext(*this);
+		initialState->EntryActions();
+	}
 
 	void Pacman::OnUpdate(float deltaTime)
 	{
+		GetState()->Off();
+		GetState()->On();
 		int posX = GetPosition().x - 10;
 		int posY = GetPosition().y - 10;
 		justChangedDirection = false;
@@ -93,6 +103,16 @@ namespace PacmanGame
             direction = prevDirection;
 			SetRotation(prevRotation);
         }
+	}
+
+	void Pacman::OnToOff()
+	{
+		ChangeState(new StateOff());
+	}
+
+	void Pacman::OffToOn()
+	{
+		ChangeState(new StateOn());
 	}
 
 }
