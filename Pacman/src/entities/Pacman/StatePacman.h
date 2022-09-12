@@ -1,5 +1,6 @@
 #pragma once
 #include "MiniEngine.h"
+#include "Pacman.h"
 
 namespace PacmanGame
 {
@@ -10,12 +11,8 @@ namespace PacmanGame
     public:
         StatePacman(std::string&& name) : StateBase(std::move(name)) {}
 
-        virtual bool On() { return false; }
-        virtual bool Off() { return false; }
+        virtual bool PowerUpCollected() { return false; }
 
-        Pacman* GetMyContext()
-        {
-            return (Pacman*)GetContext();
-        }
+        virtual void OnUpdate() { return; }
     };
 }

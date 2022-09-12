@@ -13,3 +13,4 @@
 #include "MiniEngine/Rendering/Entity.h"
 #include "MiniEngine/Utils/Statemachine/StateBase.h"
 #include "MiniEngine/Utils/Statemachine/StatefulContext.h"
+#include "MiniEngine/Utils/Timer.h"

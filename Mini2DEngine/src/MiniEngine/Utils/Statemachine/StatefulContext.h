@@ -13,7 +13,7 @@ namespace MiniEngine
         virtual StateBase* GetState() = 0;
         void SetState(StateBase& state)
         {
-            this->state = &state;
+            this->state.reset(&state);
         }
 
         void ChangeState(StateBase* newState)
@@ -23,13 +23,12 @@ namespace MiniEngine
             state->ExitActions();
 
             newState->SetContext(*(state->GetContext()));
-            delete state;
-            state = newState;
+            state.reset(newState);
 
             state->EntryActions();
         }
 
     protected:
-        StateBase* state;
+        Scope<StateBase> state;
     };
 }

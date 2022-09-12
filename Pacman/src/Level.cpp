@@ -125,6 +125,7 @@ namespace PacmanGame
         {
             collisionCheckCell.type = CellType::Empty;
             scene->RemoveEntity(collisionCheckCell.id);
+            pacmanEntity->PowerUpCollected();
         }
     }
 }

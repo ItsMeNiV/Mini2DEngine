@@ -13,10 +13,14 @@ namespace PacmanGame
         virtual void OnUpdate(float deltaTime);
         void OnWallCollision(glm::vec2 wallPos);
         const glm::vec2& GetDirection() { return direction; }
-        virtual StatePacman* GetState() { return (StatePacman*)state; }
+        virtual StatePacman* GetState() { return (StatePacman*)state.get(); }
 
-        void OnToOff();
-        void OffToOn();
+        //State-related Events
+        void PowerUpCollected();
+
+        //State-Changes
+        void NormalToPoweredUp();
+        void PoweredUpToNormal();
 
     private:
         const float speed = 100.0f;

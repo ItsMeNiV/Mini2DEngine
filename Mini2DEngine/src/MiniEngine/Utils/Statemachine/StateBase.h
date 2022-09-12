@@ -9,6 +9,7 @@ namespace MiniEngine
     {
     public:
         StateBase(std::string&& name) : name(name), context(nullptr) {}
+        virtual ~StateBase() = default;
 
         virtual void EntryActions() = 0;
         virtual void ExitActions() = 0;

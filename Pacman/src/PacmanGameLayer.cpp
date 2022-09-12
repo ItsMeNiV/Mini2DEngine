@@ -1,6 +1,6 @@
 #include "PacmanGameLayer.h"
 #include "MiniEngine.h"
-#include "entities/Pacman.h"
+#include "entities/Pacman/Pacman.h"
 #include "Level.h"
 
 namespace PacmanGame

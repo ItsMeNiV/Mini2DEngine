@@ -1,7 +1,7 @@
 #include "Pacman.h"
 #include "MiniEngine.h"
-#include "StateOn.h"
-#include "StateOff.h"
+#include "StateNormal.h"
+#include "StatePoweredUp.h"
 
 namespace PacmanGame
 {
@@ -9,7 +9,7 @@ namespace PacmanGame
 	Pacman::Pacman(float x, float y, MiniEngine::Ref<MiniEngine::Texture> texture) : MiniEngine::Entity("Pacman", x, y, 20.0f, 20.0f, 0.0f, texture),
 		direction(0.0f, 0.0f), prevDirection(0.0f, 0.0f), bufferedInput(MiniEngine::Key::SPACE)
 	{
-		StatePacman* initialState = new StateOn();
+		StatePacman* initialState = new StateNormal();
 		SetState(*initialState);
 		initialState->SetContext(*this);
 		initialState->EntryActions();
@@ -17,8 +17,6 @@ namespace PacmanGame
 
 	void Pacman::OnUpdate(float deltaTime)
 	{
-		GetState()->Off();
-		GetState()->On();
 		int posX = GetPosition().x - 10;
 		int posY = GetPosition().y - 10;
 		justChangedDirection = false;
@@ -83,6 +81,8 @@ namespace PacmanGame
 		glm::vec2& pos = this->GetPosition();
 		float step = speed * deltaTime;
 		pos += direction * step;
+
+		GetState()->OnUpdate();
 	}
 
 	void Pacman::OnWallCollision(glm::vec2 wallPos)
@@ -105,14 +105,19 @@ namespace PacmanGame
         }
 	}
 
-	void Pacman::OnToOff()
+	void Pacman::PowerUpCollected()
 	{
-		ChangeState(new StateOff());
+		GetState()->PowerUpCollected();
 	}
 
-	void Pacman::OffToOn()
+	void Pacman::NormalToPoweredUp()
 	{
-		ChangeState(new StateOn());
+		ChangeState(new StatePoweredUp());
+	}
+
+	void Pacman::PoweredUpToNormal()
+	{
+		ChangeState(new StateNormal());
 	}
 
 }

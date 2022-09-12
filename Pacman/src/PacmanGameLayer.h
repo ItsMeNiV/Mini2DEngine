@@ -1,7 +1,7 @@
 #pragma once
 #include "MiniEngine.h"
 #include "Level.h"
-#include "entities/Pacman.h"
+#include "entities/Pacman/Pacman.h"
 
 namespace PacmanGame
 {
