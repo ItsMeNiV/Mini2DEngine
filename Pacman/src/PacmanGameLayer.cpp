@@ -1,7 +1,7 @@
 #include "PacmanGameLayer.h"
 #include "MiniEngine.h"
-#include "entities/Pacman/Pacman.h"
 #include "Level.h"
+#include "Entities/Ghost/BlinkyGhost.h"
 
 namespace PacmanGame
 {
@@ -10,7 +10,10 @@ namespace PacmanGame
         : Layer("PacmanGameLayer"), camera(MiniEngine::CreateRef<MiniEngine::OrthographicCamera>(800, 600)), scene(MiniEngine::CreateRef<MiniEngine::Scene>(*camera)),
         gameLevel(MiniEngine::CreateRef<Level>()),
         pacmanEntity(MiniEngine::CreateRef<Pacman>((gameLevel->GetPacmanSpawnCell().x * 20) + 10, (gameLevel->GetPacmanSpawnCell().y * 20) + 10, MiniEngine::Texture::Create("assets/pictures/pacman.png"))),
-        gameWon(false) {}
+        gameWon(false)
+    {
+        ghostEntities.push_back(MiniEngine::CreateRef <BlinkyGhost>((gameLevel->GetGhostSpawnCell().x * 20) + 10, (gameLevel->GetGhostSpawnCell().y * 20) + 10));
+    }
 
     void PacmanGameLayer::OnAttach()
     {
@@ -19,6 +22,8 @@ namespace PacmanGame
         scene->AddEntity(background);
         gameLevel->CreateCoinAndPowerupEntities(scene);
         scene->AddEntity(pacmanEntity);
+        for (MiniEngine::Ref<Ghost> g : ghostEntities)
+            scene->AddEntity(g);
     }
     
     void PacmanGameLayer::OnDetach()

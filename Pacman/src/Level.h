@@ -22,6 +22,7 @@ namespace PacmanGame
 
         void CreateCoinAndPowerupEntities(MiniEngine::Ref<MiniEngine::Scene>& scene);
         Cell GetPacmanSpawnCell();
+        Cell GetGhostSpawnCell();
         void checkPacmanWallCollision(MiniEngine::Ref<Pacman> pacmanEntity);
         void checkPacmanCoinCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene);
         void checkPacmanPowerUpCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene);
@@ -31,5 +32,6 @@ namespace PacmanGame
 	private:
         Cell* levelCellsPtrBase = nullptr;
         Cell* levelCellsPtr = nullptr;
+        const uint16_t levelSize = 30 * 40; //30 * 40 cells at 20px*20px = 800*600
 	};
 }

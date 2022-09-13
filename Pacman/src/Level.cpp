@@ -8,7 +8,7 @@ namespace PacmanGame
 {
     Level::Level()
     {
-        levelCellsPtrBase = new Cell[30 * 40]; //30 * 40 cells at 20px*20px = 800*600
+        levelCellsPtrBase = new Cell[levelSize];
         levelCellsPtr = levelCellsPtrBase;
         std::string filename("assets/level.txt");
         std::vector<char> bytes;
@@ -82,6 +82,18 @@ namespace PacmanGame
         return *levelCellsPtrBase;
     }
 
+    Cell Level::GetGhostSpawnCell()
+    {
+        for (uint16_t i = 0; i <= levelSize; i++)
+        {
+            Cell c = levelCellsPtrBase[i];
+
+            if (c.type == CellType::GhostSpawn)
+                return c;
+        }
+        return *levelCellsPtrBase;
+    }
+
     void Level::checkPacmanWallCollision(MiniEngine::Ref<Pacman> pacmanEntity)
     {
         uint16_t cellX = (uint16_t)(pacmanEntity->GetPosition().x - 10.0f) / 20;
@@ -131,7 +143,7 @@ namespace PacmanGame
     std::vector<Cell*> Level::GetCellsByCellType(CellType cellType)
     {
         std::vector<Cell*> returnVector;
-        for (uint16_t i = 0; i <= 30 * 40; i++)
+        for (uint16_t i = 0; i <= levelSize; i++)
         {
             Cell& c = levelCellsPtrBase[i];
             if (c.type == cellType)
