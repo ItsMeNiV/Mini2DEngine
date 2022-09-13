@@ -26,6 +26,8 @@ namespace PacmanGame
         void checkPacmanCoinCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene);
         void checkPacmanPowerUpCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene);
 
+        std::vector<Cell*> GetCellsByCellType(CellType cellType);
+
 	private:
         Cell* levelCellsPtrBase = nullptr;
         Cell* levelCellsPtr = nullptr;

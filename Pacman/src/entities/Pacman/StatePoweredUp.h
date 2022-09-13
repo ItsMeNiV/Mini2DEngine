@@ -14,7 +14,9 @@ namespace PacmanGame
 
         virtual bool PowerUpCollected()
         {
-            return false;
+            timer.CancelTimer();
+            timer.StartTimer();
+            return true;
         }
 
         virtual void OnUpdate()

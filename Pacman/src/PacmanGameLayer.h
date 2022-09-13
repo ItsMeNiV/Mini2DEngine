@@ -17,10 +17,13 @@ namespace PacmanGame
 
         void OnUpdate(float deltaTime);
 
+        void CheckWin();
+
     private:
         MiniEngine::Ref<MiniEngine::OrthographicCamera> camera;
         MiniEngine::Ref<MiniEngine::Scene> scene;
         MiniEngine::Ref<Level> gameLevel;
         MiniEngine::Ref<Pacman> pacmanEntity;
+        bool gameWon;
     };
 }

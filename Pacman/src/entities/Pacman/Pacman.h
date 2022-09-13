@@ -27,7 +27,9 @@ namespace PacmanGame
         glm::vec2 direction;
         glm::vec2 prevDirection;
         MiniEngine::KeyCode bufferedInput;
+        MiniEngine::KeyCode prevBufferedInput;
         float prevRotation;
         bool justChangedDirection = false;
+        uint8_t inputBufferTimer;
     };
 }

@@ -7,7 +7,7 @@ namespace PacmanGame
 {
 
 	Pacman::Pacman(float x, float y, MiniEngine::Ref<MiniEngine::Texture> texture) : MiniEngine::Entity("Pacman", x, y, 20.0f, 20.0f, 0.0f, texture),
-		direction(0.0f, 0.0f), prevDirection(0.0f, 0.0f), bufferedInput(MiniEngine::Key::SPACE)
+		direction(0.0f, 0.0f), prevDirection(0.0f, 0.0f), prevRotation(0.0f), bufferedInput(MiniEngine::Key::SPACE), inputBufferTimer(0)
 	{
 		StatePacman* initialState = new StateNormal();
 		SetState(*initialState);
@@ -17,8 +17,18 @@ namespace PacmanGame
 
 	void Pacman::OnUpdate(float deltaTime)
 	{
+		if (bufferedInput != MiniEngine::Key::SPACE)
+		{
+			if (++inputBufferTimer == 100)
+			{
+				bufferedInput = MiniEngine::Key::SPACE;
+				inputBufferTimer = 0;
+			}
+		}
+
 		int posX = GetPosition().x - 10;
 		int posY = GetPosition().y - 10;
+
 		justChangedDirection = false;
 		//Pacman Controls
 		if (MiniEngine::Input::IsKeyPressed(MiniEngine::Key::W) || bufferedInput == MiniEngine::Key::W && direction != glm::vec2(0.0f, 1.0f))
@@ -31,6 +41,7 @@ namespace PacmanGame
 				SetRotation(90.0f);
 				justChangedDirection = true;
 				bufferedInput = MiniEngine::Key::SPACE;
+				inputBufferTimer = 0;
 			}
 			else if (bufferedInput != MiniEngine::Key::W)
 				bufferedInput = MiniEngine::Key::W;
@@ -45,6 +56,7 @@ namespace PacmanGame
 				SetRotation(180.0f);
 				justChangedDirection = true;
 				bufferedInput = MiniEngine::Key::SPACE;
+				inputBufferTimer = 0;
 			}
 			else if (bufferedInput != MiniEngine::Key::A)
 				bufferedInput = MiniEngine::Key::A;
@@ -59,6 +71,7 @@ namespace PacmanGame
 				SetRotation(270.0f);
 				justChangedDirection = true;
 				bufferedInput = MiniEngine::Key::SPACE;
+				inputBufferTimer = 0;
 			}
 			else if (bufferedInput != MiniEngine::Key::S)
 				bufferedInput = MiniEngine::Key::S;
@@ -73,6 +86,7 @@ namespace PacmanGame
 				SetRotation(0.0f);
 				justChangedDirection = true;
 				bufferedInput = MiniEngine::Key::SPACE;
+				inputBufferTimer = 0;
 			}
 			else if (bufferedInput != MiniEngine::Key::D)
 				bufferedInput = MiniEngine::Key::D;
@@ -81,6 +95,11 @@ namespace PacmanGame
 		glm::vec2& pos = this->GetPosition();
 		float step = speed * deltaTime;
 		pos += direction * step;
+
+		if ((int)pos.x - 10 % 20 != 0 && (int)pos.x - 10 % 20 <= 0.1)
+			pos.x = (int)pos.x + (int)pos.x % 20;
+		if ((int)pos.y - 10 % 20 != 0 && (int)pos.y - 10 % 20 <= 0.1)
+			pos.y = (int)pos.y + (int)pos.y % 20;
 
 		GetState()->OnUpdate();
 	}

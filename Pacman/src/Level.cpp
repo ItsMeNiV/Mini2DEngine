@@ -104,7 +104,7 @@ namespace PacmanGame
         uint16_t cellX = (uint16_t)pacmanEntity->GetPosition().x / 20;
         uint16_t cellY = (uint16_t)pacmanEntity->GetPosition().y / 20;
 
-        Cell collisionCheckCell = levelCellsPtrBase[cellY * 40 + cellX];
+        Cell& collisionCheckCell = levelCellsPtrBase[cellY * 40 + cellX];
 
         if (collisionCheckCell.type == CellType::Coin)
         {
@@ -119,7 +119,7 @@ namespace PacmanGame
         uint16_t cellX = (uint16_t)pacmanEntity->GetPosition().x / 20;
         uint16_t cellY = (uint16_t)pacmanEntity->GetPosition().y / 20;
 
-        Cell collisionCheckCell = levelCellsPtrBase[cellY * 40 + cellX];
+        Cell& collisionCheckCell = levelCellsPtrBase[cellY * 40 + cellX];
 
         if (collisionCheckCell.type == CellType::PowerUp)
         {
@@ -127,5 +127,18 @@ namespace PacmanGame
             scene->RemoveEntity(collisionCheckCell.id);
             pacmanEntity->PowerUpCollected();
         }
+    }
+    std::vector<Cell*> Level::GetCellsByCellType(CellType cellType)
+    {
+        std::vector<Cell*> returnVector;
+        for (uint16_t i = 0; i <= 30 * 40; i++)
+        {
+            Cell& c = levelCellsPtrBase[i];
+            if (c.type == cellType)
+            {
+                returnVector.push_back(&c);
+            }
+        }
+        return returnVector;
     }
 }
