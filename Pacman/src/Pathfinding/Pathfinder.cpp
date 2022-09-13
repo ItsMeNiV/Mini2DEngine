@@ -4,101 +4,124 @@
 
 namespace PacmanGame
 {
-    uint16_t Pathfinder::CalculatePath(Cell* pathBuffer)
+
+    Pathfinder* Pathfinder::instance = nullptr;
+
+    uint16_t Pathfinder::CalculatePath(Cell* cellFrom, Cell* cellTo, std::vector<Cell>& pathBuffer)
     {
-        uint16_t pathLength = 0;
-        PathElem& currentCell = cellFrom;
-        openList.push_back(currentCell);
+        uint16_t pathLength = 1;
 
-        while (!Finished())
+        for (int i = 0; i < levelSize; i++)
         {
-            RemovePathElem(currentCell, openList);
-            closedList.push_back(currentCell);
+            if (levelPtrBase[i].cell->id == cellFrom->id)
+                this->cellFrom = &levelPtrBase[i];
+            if (levelPtrBase[i].cell->id == cellTo->id)
+                this->cellTo = &levelPtrBase[i];
+        }
 
-            std::vector<Cell&> neighbours = GetNeighbours(*currentCell.cell);
-            for (Cell& neighbourCell : neighbours)
+        if(cellFrom != nullptr && cellTo != nullptr)
+        {
+            PathElem* currentCell = this->cellFrom;
+            openList.push_back(currentCell);
+
+            do
             {
-                PathElem neighbour;
-                neighbour.cell = &neighbourCell;
-                if (DoesListContainCell(neighbourCell, openList))
+                RemovePathElem(*currentCell, openList);
+                closedList.push_back(currentCell);
+
+                std::vector<PathElem*> neighbours = GetNeighbours(currentCell->cell);
+                for (PathElem* neighbour : neighbours)
                 {
-                    uint16_t moveG = CalculateG(currentCell);
-                    if (currentCell.G + moveG < neighbour.G) //This path is better
+                    if (DoesListContainCell(neighbour->cell, openList))
                     {
-                        neighbour.parentElem = &currentCell;
-                        neighbour.G = moveG;
+                        uint16_t moveG = CalculateG(*currentCell);
+                        if (currentCell->G + moveG < neighbour->G) //This path is better
+                        {
+                            neighbour->parentElem = currentCell;
+                            neighbour->G = moveG;
+                        }
+                    }
+                    else
+                    {
+                        neighbour->G = CalculateG(*currentCell);
+                        neighbour->parentElem = currentCell;
+                        openList.push_back(neighbour);
                     }
                 }
-                else
+
+                if (openList.size() == 0)
                 {
-                    neighbour.G = CalculateG(currentCell);
-                    openList.push_back(neighbour);
-                    neighbour.parentElem = &currentCell;
+                    std::cout << "Couldn't find path" << std::endl;
+                    return 0;
                 }
-            }
+                PathElem* lowestGElem = openList[0];
+                for (PathElem* e : openList)
+                {
+                    if (e->G < lowestGElem->G && !DoesListContainCell(e->cell, closedList))
+                        lowestGElem = e;
+                }
+                currentCell = lowestGElem;
+            } while (!Finished());
 
-            assert(openList.size() != 0); //If openlist is empty we cannot find the path
-            PathElem* lowestGElem = &openList[0];
-            for (PathElem& e : openList)
+            //Fill buffer
+            PathElem* iterElem = currentCell;
+            while (iterElem->cell->id != cellFrom->id)
             {
-                if (e.G < lowestGElem->G && !DoesListContainCell(*e.cell, closedList))
-                    lowestGElem = &e;
+                pathLength++;
+                iterElem = iterElem->parentElem;
             }
-            currentCell = *lowestGElem;
-        }
 
-        //Fill buffer
-        pathBuffer = new Cell[pathLength];
-        PathElem& currElem = cellTo;
-        for (int i = pathLength - 1; i >= 0; i--)
-        {
-            pathBuffer[i] = *currElem.cell;
-            currElem = *currElem.parentElem;
-        }
+            pathBuffer.resize(pathLength);
+            PathElem* currElem = this->cellTo;
+            for (int i = 1; i <= pathLength; i++)
+            {
+                pathBuffer[pathLength - i] = *currElem->cell;
+                currElem = currElem->parentElem;
+            }
 
-        //Cleanup
-        openList.clear();
-        closedList.clear();
+            //Cleanup
+            openList.clear();
+            closedList.clear();
+        }
         return pathLength;
     }
 
     bool Pathfinder::Finished()
     {
-        return false;
+        return DoesListContainCell(cellTo->cell, closedList);
     }
 
-    std::vector<Cell&> Pathfinder::GetNeighbours(Cell& searchCell)
+    std::vector<PathElem*> Pathfinder::GetNeighbours(Cell* searchCell) //TODO: Check for walls
     {
-        std::vector<Cell&> returnList;
-        returnList.reserve(4);
+        std::vector<PathElem*> returnList;
 
         //TODO: Replace hardcoded level width 40
 
         //Top
-        Cell& top = levelPtrBase[((searchCell.y - 1) * 40) + searchCell.x];
-        if(!DoesListContainCell(top, closedList))
+        PathElem* top = &levelPtrBase[((searchCell->y - 1) * 40) + searchCell->x];
+        if(top->cell->type != CellType::Wall && !DoesListContainCell(top->cell, closedList))
             returnList.push_back(top);
         //Left
-        Cell& left = levelPtrBase[(searchCell.y * 40) + searchCell.x - 1];
-        if (!DoesListContainCell(left, closedList))
+        PathElem* left = &levelPtrBase[(searchCell->y * 40) + searchCell->x - 1];
+        if (left->cell->type != CellType::Wall && !DoesListContainCell(left->cell, closedList))
             returnList.push_back(left);
         //Bottom
-        Cell& bottom = levelPtrBase[((searchCell.y + 1) * 40) + searchCell.x];
-        if (!DoesListContainCell(bottom, closedList))
+        PathElem* bottom = &levelPtrBase[((searchCell->y + 1) * 40) + searchCell->x];
+        if (bottom->cell->type != CellType::Wall && !DoesListContainCell(bottom->cell, closedList))
             returnList.push_back(bottom);
         //Right
-        Cell& right = levelPtrBase[(searchCell.y * 40) + searchCell.x + 1];
-        if (!DoesListContainCell(right, closedList))
+        PathElem* right = &levelPtrBase[(searchCell->y * 40) + searchCell->x + 1];
+        if (right->cell->type != CellType::Wall && !DoesListContainCell(right->cell, closedList))
             returnList.push_back(right);
 
         return returnList;
     }
 
-    bool Pathfinder::DoesListContainCell(Cell& cell, std::vector<PathElem>& list)
+    bool Pathfinder::DoesListContainCell(Cell* cell, std::vector<PathElem*>& list)
     {
-        for (PathElem& e : list)
+        for (PathElem* e : list)
         {
-            if (e.cell == &cell)
+            if (e->cell->id == cell->id)
             {
                 return true;
             }
@@ -106,11 +129,11 @@ namespace PacmanGame
         return false;
     }
 
-    void Pathfinder::RemovePathElem(PathElem& pathElem, std::vector<PathElem>& list)
+    void Pathfinder::RemovePathElem(PathElem& pathElem, std::vector<PathElem*>& list)
     {
-        list.erase(std::remove_if(begin(list), end(list), [pathElem](PathElem& e)
+        list.erase(std::remove_if(begin(list), end(list), [pathElem](PathElem* e)
             {
-                return e.cell == pathElem.cell;
+                return e->cell->id == pathElem.cell->id;
             }), list.end());
     }
     uint16_t Pathfinder::CalculateG(PathElem& currentPathElem)

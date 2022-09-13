@@ -32,20 +32,19 @@ namespace PacmanGame
             uint8_t x = index % 40;
             uint8_t y = index / 40;
             if (*i == 'X')
-                *levelCellsPtr = { "", CellType::Wall, x, y};
+                *levelCellsPtr = { "W" + std::to_string(index), CellType::Wall, x, y};
             else if (*i == 'O')
-                *levelCellsPtr = { "", CellType::Coin, x, y };
+                *levelCellsPtr = { "C" + std::to_string(index), CellType::Coin, x, y };
             else if (*i == 'P')
-                *levelCellsPtr = { "", CellType::PacmanSpawn, x, y };
+                *levelCellsPtr = { "PS" + std::to_string(index), CellType::PacmanSpawn, x, y };
             else if (*i == 'G')
-                *levelCellsPtr = { "", CellType::GhostSpawn, x, y };
+                *levelCellsPtr = { "GS" + std::to_string(index), CellType::GhostSpawn, x, y };
             else if (*i == 'U')
-                *levelCellsPtr = { "", CellType::PowerUp, x, y };
+                *levelCellsPtr = { "PU" + std::to_string(index), CellType::PowerUp, x, y };
 
             levelCellsPtr++;
             index++;
         }
-
     }
 
     void Level::CreateCoinAndPowerupEntities(MiniEngine::Ref<MiniEngine::Scene>& scene)

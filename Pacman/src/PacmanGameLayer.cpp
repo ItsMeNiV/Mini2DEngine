@@ -2,6 +2,7 @@
 #include "MiniEngine.h"
 #include "Level.h"
 #include "Entities/Ghost/BlinkyGhost.h"
+#include "Pathfinding/Pathfinder.h"
 
 namespace PacmanGame
 {
@@ -12,7 +13,8 @@ namespace PacmanGame
         pacmanEntity(MiniEngine::CreateRef<Pacman>((gameLevel->GetPacmanSpawnCell().x * 20) + 10, (gameLevel->GetPacmanSpawnCell().y * 20) + 10, MiniEngine::Texture::Create("assets/pictures/pacman.png"))),
         gameWon(false)
     {
-        ghostEntities.push_back(MiniEngine::CreateRef <BlinkyGhost>((gameLevel->GetGhostSpawnCell().x * 20) + 10, (gameLevel->GetGhostSpawnCell().y * 20) + 10));
+        Pathfinder::GetInstance().Init(gameLevel->GetLevelCellsPtrBase(), gameLevel->GetLevelSize());
+        ghostEntities.push_back(MiniEngine::CreateRef<BlinkyGhost>((gameLevel->GetGhostSpawnCell().x * 20) + 10, (gameLevel->GetGhostSpawnCell().y * 20) + 10, gameLevel));
     }
 
     void PacmanGameLayer::OnAttach()
@@ -24,6 +26,7 @@ namespace PacmanGame
         scene->AddEntity(pacmanEntity);
         for (MiniEngine::Ref<Ghost> g : ghostEntities)
             scene->AddEntity(g);
+
     }
     
     void PacmanGameLayer::OnDetach()

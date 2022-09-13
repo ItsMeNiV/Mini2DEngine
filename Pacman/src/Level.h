@@ -28,6 +28,8 @@ namespace PacmanGame
         void checkPacmanPowerUpCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene);
 
         std::vector<Cell*> GetCellsByCellType(CellType cellType);
+        Cell* GetLevelCellsPtrBase() { return levelCellsPtrBase; }
+        uint16_t GetLevelSize() { return levelSize; }
 
 	private:
         Cell* levelCellsPtrBase = nullptr;
