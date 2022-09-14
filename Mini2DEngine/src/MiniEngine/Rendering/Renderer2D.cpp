@@ -123,7 +123,7 @@ namespace MiniEngine
 
         for (Ref<Entity> e : scene.GetEntities())
         {
-            DrawQuad(e->GetPosition().x, e->GetPosition().y, e->GetSize().x, e->GetSize().y, e->GetRotation(), e->GetTexture());
+            DrawQuad(e->GetPosition().x, e->GetPosition().y, e->GetSize().x, e->GetSize().y, e->GetRotation(), e->GetFlipHorizontal(), e->GetTexture());
         }
 
         EndScene();
@@ -167,11 +167,14 @@ namespace MiniEngine
         rendererData.quadIndexCount += 6;
     }
 
-    void Renderer2D::DrawQuad(float x, float y, float sizeX, float sizeY, float rotation, Ref<Texture>& texture)
+    void Renderer2D::DrawQuad(float x, float y, float sizeX, float sizeY, float rotation, bool flipHorizontal, Ref<Texture>& texture)
     {
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), { x, y, 0.0f })
             * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), {0.0f, 0.0f, 1.0f})
             * glm::scale(glm::mat4(1.0f), { sizeX, sizeY, 1.0f });
+
+        if(flipHorizontal)
+            transform = glm::scale(transform, { -1.0f, 1.0f, 1.0f });
 
         float textureIndex = -1.0f;
         for (uint32_t i = 0; i < rendererData.textureSlotIndex; i++)

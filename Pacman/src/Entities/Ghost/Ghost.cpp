@@ -6,7 +6,7 @@
 namespace PacmanGame
 {
 	Ghost::Ghost(std::string&& name, float x, float y, MiniEngine::Ref<MiniEngine::Texture> texture, MiniEngine::Ref<Level> levelRef)
-		: MiniEngine::Entity(std::move(name), x, y, 20.0f, 20.0f, 0.0f, texture), direction(0.0f, 0.0f), levelRef(levelRef), pacmanPos({})
+		: MiniEngine::Entity(std::move(name), x, y, 20.0f, 20.0f, 0.0f, false, texture), direction(0.0f, 0.0f), levelRef(levelRef), pacmanPos({})
 	{
 		StateIdle* initialState = new StateIdle(3000);
 		SetState(*initialState);
@@ -26,6 +26,11 @@ namespace PacmanGame
 			direction.x = currentPath[1].x - currentPath[0].x;
 			direction.y = currentPath[1].y - currentPath[0].y;
 		}
+
+		if (direction.x == -1)
+			SetFlipHorizontal(true);
+		else
+			SetFlipHorizontal(false);
 
 		glm::vec2& pos = this->GetPosition();
 		float step = speed * deltaTime;

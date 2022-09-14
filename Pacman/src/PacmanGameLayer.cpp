@@ -20,7 +20,7 @@ namespace PacmanGame
     void PacmanGameLayer::OnAttach()
     {
         MiniEngine::Ref<MiniEngine::Texture> backgroundTexture = MiniEngine::Texture::Create("assets/pictures/background.png");
-        MiniEngine::Ref<MiniEngine::Entity> background = MiniEngine::CreateRef<MiniEngine::Entity>(std::string("background"), 400.0f, 300.0f, 800.0f, 600.0f, 0.0f, backgroundTexture);
+        MiniEngine::Ref<MiniEngine::Entity> background = MiniEngine::CreateRef<MiniEngine::Entity>(std::string("background"), 400.0f, 300.0f, 800.0f, 600.0f, 0.0f, false, backgroundTexture);
         scene->AddEntity(background);
         gameLevel->CreateCoinAndPowerupEntities(scene);
         scene->AddEntity(pacmanEntity);
