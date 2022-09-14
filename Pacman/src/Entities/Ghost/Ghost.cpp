@@ -7,8 +7,8 @@
 
 namespace PacmanGame
 {
-	Ghost::Ghost(std::string&& name, float x, float y, MiniEngine::Ref<MiniEngine::Texture> texture, MiniEngine::Ref<MiniEngine::Texture> textureDead, MiniEngine::Ref<Level> levelRef)
-		: MiniEngine::Entity(std::move(name), x, y, 20.0f, 20.0f, 0.0f, false, texture), normalTexture(texture), deadTexture(textureDead), direction(0.0f, 0.0f), levelRef(levelRef), pacmanPos({})
+	Ghost::Ghost(std::string&& name, float x, float y, MiniEngine::Ref<MiniEngine::Texture> texture, MiniEngine::Ref<Level> levelRef)
+		: MiniEngine::Entity(std::move(name), x, y, 20.0f, 20.0f, 0.0f, false, texture), normalTexture(texture), deadTexture(MiniEngine::Texture::Create("assets/pictures/ghost_dead.png")), scatterTexture(MiniEngine::Texture::Create("assets/pictures/ghost_scatter.png")), direction(0.0f, 0.0f), levelRef(levelRef), pacmanPos({})
 	{
 		StateIdle* initialState = new StateIdle(3000);
 		SetState(*initialState);
@@ -53,9 +53,9 @@ namespace PacmanGame
 		ChangeState(new StateHunting());
 	}
 
-	void Ghost::StartScattering()
+	void Ghost::StartScattering(bool useScatterTexture)
 	{
-		ChangeState(new StateScatter(6000));
+		ChangeState(new StateScatter(6000, useScatterTexture));
 	}
 
 	void Ghost::ReturnToSpawn()

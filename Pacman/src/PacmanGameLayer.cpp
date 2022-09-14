@@ -2,7 +2,7 @@
 #include "MiniEngine.h"
 #include "Level.h"
 #include "Entities/Ghost/BlinkyGhost.h"
-#include "Entities/Ghost/StateHunting.h"
+#include "Entities/Ghost/StateDead.h"
 #include "Entities/Pacman/StatePoweredUp.h"
 #include "Pathfinding/Pathfinder.h"
 
@@ -43,12 +43,17 @@ namespace PacmanGame
             scene->OnUpdate(deltaTime);
             gameLevel->CheckWallCollision(pacmanEntity, pacmanEntity->GetDirection());
             gameLevel->CheckPacmanCoinCollision(pacmanEntity, scene);
-            gameLevel->CheckPacmanPowerUpCollision(pacmanEntity, scene);
+            if (gameLevel->CheckPacmanPowerUpCollision(pacmanEntity, scene))
+            {
+                for (MiniEngine::Ref<Ghost> g : ghostEntities)
+                    g->StartScattering(true); //Todo: Change to fleeing
+            }
+
             for (MiniEngine::Ref<Ghost> g : ghostEntities)
             {
                 g->SetPacmanPos(pacmanEntity->GetPosition());
                 gameLevel->CheckWallCollision(g, g->GetDirection());
-                if (gameLevel->CheckGhostCollision(pacmanEntity, g) && dynamic_cast<StateHunting*>(g->GetState()) != nullptr)
+                if (gameLevel->CheckGhostCollision(pacmanEntity, g) && dynamic_cast<StateDead*>(g->GetState()) == nullptr)
                 {
                     if (dynamic_cast<StatePoweredUp*>(pacmanEntity->GetState()) != nullptr)
                     {

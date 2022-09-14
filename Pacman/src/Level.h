@@ -25,7 +25,7 @@ namespace PacmanGame
         Cell* GetGhostSpawnCell();
         void CheckWallCollision(MiniEngine::Ref<MiniEngine::Entity> entity, const glm::vec2& direction);
         void CheckPacmanCoinCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene);
-        void CheckPacmanPowerUpCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene);
+        bool CheckPacmanPowerUpCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene);
         bool CheckGhostCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Entity> ghostEntity);
 
         std::vector<Cell*> GetCellsByCellType(CellType cellType);

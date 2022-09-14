@@ -30,7 +30,7 @@ namespace PacmanGame
 		{
 			if (timerOver)
 			{
-                ((Ghost*)GetContext())->StartScattering();
+                ((Ghost*)GetContext())->StartScattering(false);
                 timerOver = false;
 			}
 		}

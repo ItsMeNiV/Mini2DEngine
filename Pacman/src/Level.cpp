@@ -127,7 +127,7 @@ namespace PacmanGame
         }
     }
 
-    void Level::CheckPacmanPowerUpCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene)
+    bool Level::CheckPacmanPowerUpCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene)
     {
         uint16_t cellX = (uint16_t)pacmanEntity->GetPosition().x / 20;
         uint16_t cellY = (uint16_t)pacmanEntity->GetPosition().y / 20;
@@ -139,7 +139,9 @@ namespace PacmanGame
             collisionCheckCell.type = CellType::Empty;
             scene->RemoveEntity(collisionCheckCell.id);
             pacmanEntity->PowerUpCollected();
+            return true;
         }
+        return false;
     }
 
     bool Level::CheckGhostCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Entity> ghostEntity)

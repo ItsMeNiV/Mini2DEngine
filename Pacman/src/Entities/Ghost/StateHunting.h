@@ -9,9 +9,7 @@ namespace PacmanGame
 	public:
 		StateHunting() : StateGhost("StateHunting") {}
 
-		virtual void EntryActions()
-		{
-		}
+		virtual void EntryActions() { return; }
 
 		virtual void OnUpdate(float deltaTime)
 		{

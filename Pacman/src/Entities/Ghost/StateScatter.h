@@ -6,11 +6,22 @@ namespace PacmanGame
 	class StateScatter : public StateGhost
 	{
 	public:
-		StateScatter(uint16_t scatterTimeMs) : StateGhost("StateScatter"), timer(scatterTimeMs, timerOver) {}
+		StateScatter(uint16_t scatterTimeMs, bool useScatterTexture) : StateGhost("StateScatter"), timer(scatterTimeMs, timerOver), useScatterTexture(useScatterTexture) {}
 
-        virtual void EntryActions() { timer.StartTimer(); }
+        virtual void EntryActions()
+        {
+            Ghost* context = ((Ghost*)GetContext());
+            if(useScatterTexture)
+                context->SetTexture(context->GetScatterTexture());
+            timer.StartTimer();
+        }
 
-		virtual void ExitActions() { timer.CancelTimer(); }
+		virtual void ExitActions()
+        {
+            Ghost* context = ((Ghost*)GetContext());
+            context->SetTexture(context->GetNormalTexture());
+            timer.CancelTimer();
+        }
 
         virtual void OnUpdate(float deltaTime)
         {
@@ -25,6 +36,7 @@ namespace PacmanGame
         }
 
 	private:
+        bool useScatterTexture;
         MiniEngine::Timer timer;
         std::atomic_bool timerOver = false;
 	};
