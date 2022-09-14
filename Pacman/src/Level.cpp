@@ -41,6 +41,8 @@ namespace PacmanGame
                 *levelCellsPtr = { "GS" + std::to_string(index), CellType::GhostSpawn, x, y };
             else if (*i == 'U')
                 *levelCellsPtr = { "PU" + std::to_string(index), CellType::PowerUp, x, y };
+            else if (*i == 'M')
+                *levelCellsPtr = { "M" + std::to_string(index), CellType::MazeEntrance, x, y };
 
             levelCellsPtr++;
             index++;
@@ -93,24 +95,24 @@ namespace PacmanGame
         return *levelCellsPtrBase;
     }
 
-    void Level::checkPacmanWallCollision(MiniEngine::Ref<Pacman> pacmanEntity)
+    void Level::CheckWallCollision(MiniEngine::Ref<MiniEngine::Entity> entity, const glm::vec2& direction)
     {
-        uint16_t cellX = (uint16_t)(pacmanEntity->GetPosition().x - 10.0f) / 20;
-        uint16_t cellY = (uint16_t)(pacmanEntity->GetPosition().y - 10.0f) / 20;
+        uint16_t cellX = (uint16_t)(entity->GetPosition().x - 10.0f) / 20;
+        uint16_t cellY = (uint16_t)(entity->GetPosition().y - 10.0f) / 20;
 
-        if (pacmanEntity->GetDirection() == glm::vec2(0.0f, 1.0f)) // Up
+        if (direction == glm::vec2(0.0f, 1.0f)) // Up
             cellY += 1;
-        else if (pacmanEntity->GetDirection() == glm::vec2(1.0f, 0.0f)) // Right
+        else if (direction == glm::vec2(1.0f, 0.0f)) // Right
             cellX += 1;
 
         Cell collisionCheckCell = levelCellsPtrBase[cellY * 40 + cellX];
 
         if (collisionCheckCell.type == CellType::Wall)
-            pacmanEntity->OnWallCollision({ collisionCheckCell.x * 20.0f + 10.0f, collisionCheckCell.y * 20.0f + 10.0f });
+            entity->OnCollision({ collisionCheckCell.x * 20.0f + 10.0f, collisionCheckCell.y * 20.0f + 10.0f });
 
     }
 
-    void Level::checkPacmanCoinCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene)
+    void Level::CheckPacmanCoinCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene)
     {
         uint16_t cellX = (uint16_t)pacmanEntity->GetPosition().x / 20;
         uint16_t cellY = (uint16_t)pacmanEntity->GetPosition().y / 20;
@@ -125,7 +127,7 @@ namespace PacmanGame
         }
     }
 
-    void Level::checkPacmanPowerUpCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene)
+    void Level::CheckPacmanPowerUpCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene)
     {
         uint16_t cellX = (uint16_t)pacmanEntity->GetPosition().x / 20;
         uint16_t cellY = (uint16_t)pacmanEntity->GetPosition().y / 20;

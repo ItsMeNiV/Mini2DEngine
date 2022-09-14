@@ -11,7 +11,7 @@ namespace PacmanGame
 	{
 		StatePacman* initialState = new StateNormal();
 		SetState(*initialState);
-		initialState->SetContext(*this);
+		initialState->SetContext(this);
 		initialState->EntryActions();
 	}
 
@@ -104,7 +104,7 @@ namespace PacmanGame
 		GetState()->OnUpdate();
 	}
 
-	void Pacman::OnWallCollision(glm::vec2 wallPos)
+	void Pacman::OnCollision(glm::vec2 wallPos)
 	{
 		glm::vec2& pos = this->GetPosition();
 

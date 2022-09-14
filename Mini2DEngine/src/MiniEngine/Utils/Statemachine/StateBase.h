@@ -16,9 +16,9 @@ namespace MiniEngine
 
         std::string& GetName() { return name; }
         StatefulContext* GetContext() { return context; }
-        void SetContext(StatefulContext& context)
+        void SetContext(StatefulContext* context)
         {
-            this->context = &context;
+            this->context = context;
         }
 
     private:

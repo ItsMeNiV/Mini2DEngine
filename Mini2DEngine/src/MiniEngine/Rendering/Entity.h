@@ -19,7 +19,9 @@ namespace MiniEngine
         Ref<Texture>& GetTexture() { return texture; }
         void SetTexture(Ref<Texture> tex) { texture = tex; }
 
-        virtual void OnUpdate(float deltaTime) {};
+        virtual void OnUpdate(float deltaTime) {}
+
+        virtual void OnCollision(glm::vec2 colliderPos) {}
 
     private:
         std::string entityId;

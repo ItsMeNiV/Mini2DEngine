@@ -20,7 +20,7 @@ namespace PacmanGame
 
         virtual void OnUpdate()
         {
-            std::cout << "Normal update" << std::endl;
+            return;
         }
     };
 }

@@ -11,7 +11,7 @@ namespace PacmanGame
         Pacman(float x, float y, MiniEngine::Ref<MiniEngine::Texture> texture);
 
         virtual void OnUpdate(float deltaTime);
-        void OnWallCollision(glm::vec2 wallPos);
+        virtual void OnCollision(glm::vec2 wallPos) override;
         const glm::vec2& GetDirection() { return direction; }
         virtual StatePacman* GetState() { return (StatePacman*)state.get(); }
 
@@ -27,7 +27,6 @@ namespace PacmanGame
         glm::vec2 direction;
         glm::vec2 prevDirection;
         MiniEngine::KeyCode bufferedInput;
-        MiniEngine::KeyCode prevBufferedInput;
         float prevRotation;
         bool justChangedDirection = false;
         uint8_t inputBufferTimer;

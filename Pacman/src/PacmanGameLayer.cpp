@@ -39,10 +39,14 @@ namespace PacmanGame
         if (!gameWon)
         {
             scene->OnUpdate(deltaTime);
-
-            gameLevel->checkPacmanWallCollision(pacmanEntity);
-            gameLevel->checkPacmanCoinCollision(pacmanEntity, scene);
-            gameLevel->checkPacmanPowerUpCollision(pacmanEntity, scene);
+            gameLevel->CheckWallCollision(pacmanEntity, pacmanEntity->GetDirection());
+            gameLevel->CheckPacmanCoinCollision(pacmanEntity, scene);
+            gameLevel->CheckPacmanPowerUpCollision(pacmanEntity, scene);
+            for (MiniEngine::Ref<Ghost> g : ghostEntities)
+            {
+                g->SetPacmanPos(pacmanEntity->GetPosition());
+                gameLevel->CheckWallCollision(g, g->GetDirection());
+            }
 
             CheckWin();
         }

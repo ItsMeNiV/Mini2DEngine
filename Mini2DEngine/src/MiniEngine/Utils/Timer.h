@@ -8,44 +8,43 @@ namespace MiniEngine
 	class Timer
 	{
 	public:
-		Timer(uint32_t delayMs, std::function<void()> callbackFn) : delayTime(delayMs), isRunning(false), callback(callbackFn) {}
-		~Timer()
-		{
-			isRunning.store(false, std::memory_order_release);
-		}
+		Timer(uint32_t delayMs, std::atomic_bool& timerOver) : delayTime(delayMs), isRunning(false), timerOver(timerOver) {}
+		~Timer() { CancelTimer(); }
 
 		void StartTimer()
 		{
 			isRunning.store(true, std::memory_order_release);
-			timerFuture = std::async(std::launch::async, RunTimer, delayTime, &isRunning, callback);
+			startTime = clock();
+			timerFuture = std::async(std::launch::async, RunTimer, &startTime, delayTime, &isRunning, &timerOver);
 		}
 		void CancelTimer()
 		{
 			isRunning.store(false, std::memory_order_release);
-			isRunning = false;
+		}
+		void RestartTimer()
+		{
+			startTime = clock();
 		}
 
 		bool IsRunning() { return isRunning; }
 
 	private:
-		std::atomic<bool> isRunning;
+		std::atomic_bool isRunning;
+		std::atomic_bool& timerOver;
 		uint32_t delayTime;
-		std::function<void()> callback;
+		clock_t startTime;
 
 		std::future<void> timerFuture;
 
-		static void RunTimer(uint32_t delay, std::atomic<bool>* isRunning, std::function<void()> callback)
+		static void RunTimer(clock_t* startTime, uint32_t delay, std::atomic<bool>* isRunning, std::atomic<bool>* timerOver)
 		{
-			clock_t now = clock();
-
-			while (clock() - now < delay && isRunning->load(std::memory_order_acquire));
-
-			if(clock() - now >= delay) //Otherwise timer was cancelled
-				callback();
-			else
-				std::cout << "Timer was cancelled!" << std::endl;
+			while (clock() - *startTime < delay && isRunning->load(std::memory_order_acquire));
 
 			isRunning->store(false, std::memory_order_release);
+			if(clock() - *startTime < delay)
+				std::cout << "Timer was cancelled!" << std::endl;
+			else
+				timerOver->store(true, std::memory_order_release);
 		}
 
 	};

@@ -6,7 +6,7 @@ namespace PacmanGame
 {
     enum class CellType
     {
-        Empty, Wall, Coin, PowerUp, GhostSpawn, PacmanSpawn
+        Empty, Wall, Coin, PowerUp, GhostSpawn, PacmanSpawn, MazeEntrance
     };
     struct Cell
     {
@@ -23,9 +23,9 @@ namespace PacmanGame
         void CreateCoinAndPowerupEntities(MiniEngine::Ref<MiniEngine::Scene>& scene);
         Cell GetPacmanSpawnCell();
         Cell GetGhostSpawnCell();
-        void checkPacmanWallCollision(MiniEngine::Ref<Pacman> pacmanEntity);
-        void checkPacmanCoinCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene);
-        void checkPacmanPowerUpCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene);
+        void CheckWallCollision(MiniEngine::Ref<MiniEngine::Entity> entity, const glm::vec2& direction);
+        void CheckPacmanCoinCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene);
+        void CheckPacmanPowerUpCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene);
 
         std::vector<Cell*> GetCellsByCellType(CellType cellType);
         Cell* GetLevelCellsPtrBase() { return levelCellsPtrBase; }

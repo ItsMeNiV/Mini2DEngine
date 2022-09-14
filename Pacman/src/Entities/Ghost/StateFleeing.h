@@ -10,5 +10,6 @@ namespace PacmanGame
 
 		virtual void EntryActions() { return; }
 		virtual void ExitActions() { return; }
+
 	};
 }

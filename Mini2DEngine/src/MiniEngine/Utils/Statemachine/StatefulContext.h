@@ -22,7 +22,7 @@ namespace MiniEngine
 
             state->ExitActions();
 
-            newState->SetContext(*(state->GetContext()));
+            newState->SetContext(state->GetContext());
             state.reset(newState);
 
             state->EntryActions();

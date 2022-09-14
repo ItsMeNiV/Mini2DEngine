@@ -7,29 +7,29 @@ namespace PacmanGame
     class StatePoweredUp : public StatePacman
     {
     public:
-        StatePoweredUp() : StatePacman("StatePoweredUp"), timer(6000, std::bind(&StatePoweredUp::timerElapsed, this)) {}
+        StatePoweredUp() : StatePacman("StatePoweredUp"), timer(6000, timerOver) {}
 
-        virtual void EntryActions() { timer.StartTimer(); }
-        virtual void ExitActions() { timer.CancelTimer(); }
+        virtual void EntryActions() { timer.StartTimer();  }
+        virtual void ExitActions()  { timer.CancelTimer(); }
 
         virtual bool PowerUpCollected()
         {
-            timer.CancelTimer();
-            timer.StartTimer();
+            timer.RestartTimer();
             return true;
         }
 
         virtual void OnUpdate()
         {
-            std::cout << "PoweredUp update" << std::endl;
+            if (timerOver)
+            {
+                ((Pacman*)GetContext())->PoweredUpToNormal();
+                timerOver = false;
+            }
         }
 
     private:
         MiniEngine::Timer timer;
+        std::atomic_bool timerOver;
 
-        void timerElapsed()
-        {
-            ((Pacman*)GetContext())->PoweredUpToNormal();
-        }
     };
 }

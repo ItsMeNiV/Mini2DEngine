@@ -8,5 +8,6 @@ namespace PacmanGame
 	public:
 		StateGhost(std::string&& name) : StateBase(std::move(name)) {}
 
+		virtual void OnUpdate(float deltaTime) { return; }
 	};
 }

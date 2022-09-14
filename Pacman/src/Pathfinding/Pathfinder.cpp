@@ -64,7 +64,7 @@ namespace PacmanGame
             } while (!Finished());
 
             //Fill buffer
-            PathElem* iterElem = currentCell;
+            PathElem* iterElem = this->cellTo;
             while (iterElem->cell->id != cellFrom->id)
             {
                 pathLength++;
@@ -91,7 +91,7 @@ namespace PacmanGame
         return DoesListContainCell(cellTo->cell, closedList);
     }
 
-    std::vector<PathElem*> Pathfinder::GetNeighbours(Cell* searchCell) //TODO: Check for walls
+    std::vector<PathElem*> Pathfinder::GetNeighbours(Cell* searchCell)
     {
         std::vector<PathElem*> returnList;
 
