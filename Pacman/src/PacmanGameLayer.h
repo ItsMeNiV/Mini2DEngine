@@ -13,11 +13,10 @@ namespace PacmanGame
         virtual ~PacmanGameLayer() = default;
 
         virtual void OnAttach() override;
-
         virtual void OnDetach() override;
-
         void OnUpdate(float deltaTime);
 
+        void ResetGame();
         void CheckWin();
 
     private:
@@ -26,6 +25,6 @@ namespace PacmanGame
         MiniEngine::Ref<Level> gameLevel;
         MiniEngine::Ref<Pacman> pacmanEntity;
         std::vector<MiniEngine::Ref<Ghost>> ghostEntities;
-        bool gameWon;
+        bool gameWon, gameLost;
     };
 }

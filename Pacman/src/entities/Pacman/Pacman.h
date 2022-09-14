@@ -14,6 +14,9 @@ namespace PacmanGame
         virtual void OnCollision(glm::vec2 wallPos) override;
         const glm::vec2& GetDirection() { return direction; }
         virtual StatePacman* GetState() { return (StatePacman*)state.get(); }
+        void RemoveLife() { lives--; }
+        uint8_t GetLives() const { return lives; }
+        void Reset(float x, float y);
 
         //State-related Events
         void PowerUpCollected();
@@ -23,6 +26,7 @@ namespace PacmanGame
         void PoweredUpToNormal();
 
     private:
+        uint8_t lives;
         const float speed = 100.0f;
         glm::vec2 direction;
         glm::vec2 prevDirection;

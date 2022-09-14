@@ -7,7 +7,7 @@ namespace PacmanGame
 {
 
 	Pacman::Pacman(float x, float y, MiniEngine::Ref<MiniEngine::Texture> texture)
-		: MiniEngine::Entity("Pacman", x, y, 20.0f, 20.0f, 0.0f, false, texture), direction(0.0f, 0.0f), prevDirection(0.0f, 0.0f), prevRotation(0.0f), bufferedInput(MiniEngine::Key::SPACE), inputBufferTimer(0)
+		: MiniEngine::Entity("Pacman", x, y, 20.0f, 20.0f, 0.0f, false, texture), direction(0.0f, 0.0f), prevDirection(0.0f, 0.0f), prevRotation(0.0f), bufferedInput(MiniEngine::Key::SPACE), inputBufferTimer(0), lives(3)
 	{
 		StatePacman* initialState = new StateNormal();
 		SetState(*initialState);
@@ -122,6 +122,20 @@ namespace PacmanGame
             direction = prevDirection;
 			SetRotation(prevRotation);
         }
+	}
+
+	void Pacman::Reset(float x, float y)
+	{
+		glm::vec2& pos = this->GetPosition();
+		pos.x = x;
+		pos.y = y;
+		direction = { 0.0f, 0.0f };
+		prevDirection = { 0.0f, 0.0f };
+		SetRotation(0.0f);
+		prevRotation = 0.0f;
+		bufferedInput = MiniEngine::Key::SPACE;
+		inputBufferTimer = 0;
+		ChangeState(new StateNormal());
 	}
 
 	void Pacman::PowerUpCollected()

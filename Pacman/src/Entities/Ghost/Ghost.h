@@ -8,7 +8,7 @@ namespace PacmanGame
 	class Ghost : public MiniEngine::Entity, public MiniEngine::StatefulContext
 	{
 	public:
-		Ghost(std::string&& name, float x, float y, MiniEngine::Ref<MiniEngine::Texture> texture, MiniEngine::Ref<Level> levelRef);
+		Ghost(std::string&& name, float x, float y, MiniEngine::Ref<MiniEngine::Texture> texture, MiniEngine::Ref<MiniEngine::Texture> textureDead, MiniEngine::Ref<Level> levelRef);
 		virtual ~Ghost() = default;
 
 		virtual StateGhost* GetState() { return (StateGhost*)state.get(); }
@@ -16,6 +16,12 @@ namespace PacmanGame
 		MiniEngine::Ref<Level> GetLevelRef() const { return levelRef; }
 		const glm::vec2& GetDirection() { return direction; }
 		virtual Cell* GetTargetCell() = 0; //Override in each specific Ghost-Implementation
+		virtual Cell* GetTargetScatterCell() = 0; //Override in each specific Ghost-Implementation
+		MiniEngine::Ref<MiniEngine::Texture> GetNormalTexture() { return normalTexture; }
+		MiniEngine::Ref<MiniEngine::Texture> GetDeadTexture() { return deadTexture; }
+		void SetSpeed(float speed) { this->speed = speed; }
+
+		void Reset(float x, float y);
 
 		virtual void OnUpdate(float deltaTime);
 		virtual void OnCollision(glm::vec2 wallPos) override;
@@ -25,10 +31,14 @@ namespace PacmanGame
 
 		//State Events
 		void StartHunting();
+		void StartScattering();
+		void ReturnToSpawn();
 
 	private:
+		MiniEngine::Ref<MiniEngine::Texture> normalTexture;
+		MiniEngine::Ref<MiniEngine::Texture> deadTexture;
 		MiniEngine::Ref<Level> levelRef;
-		const float speed = 100.0f;
+		float speed = 100.0f;
 		glm::vec2 direction;
 		glm::vec2 pacmanPos;
 		std::vector<Cell> currentPath;

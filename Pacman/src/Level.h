@@ -22,10 +22,11 @@ namespace PacmanGame
 
         void CreateCoinAndPowerupEntities(MiniEngine::Ref<MiniEngine::Scene>& scene);
         Cell GetPacmanSpawnCell();
-        Cell GetGhostSpawnCell();
+        Cell* GetGhostSpawnCell();
         void CheckWallCollision(MiniEngine::Ref<MiniEngine::Entity> entity, const glm::vec2& direction);
         void CheckPacmanCoinCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene);
         void CheckPacmanPowerUpCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Scene>& scene);
+        bool CheckGhostCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Entity> ghostEntity);
 
         std::vector<Cell*> GetCellsByCellType(CellType cellType);
         Cell* GetLevelCellsPtrBase() { return levelCellsPtrBase; }

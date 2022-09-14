@@ -1,17 +1,28 @@
 #include "Ghost.h"
 #include "StateIdle.h"
 #include "StateHunting.h"
+#include "StateScatter.h"
+#include "StateDead.h"
 #include "../../Pathfinding/Pathfinder.h"
 
 namespace PacmanGame
 {
-	Ghost::Ghost(std::string&& name, float x, float y, MiniEngine::Ref<MiniEngine::Texture> texture, MiniEngine::Ref<Level> levelRef)
-		: MiniEngine::Entity(std::move(name), x, y, 20.0f, 20.0f, 0.0f, false, texture), direction(0.0f, 0.0f), levelRef(levelRef), pacmanPos({})
+	Ghost::Ghost(std::string&& name, float x, float y, MiniEngine::Ref<MiniEngine::Texture> texture, MiniEngine::Ref<MiniEngine::Texture> textureDead, MiniEngine::Ref<Level> levelRef)
+		: MiniEngine::Entity(std::move(name), x, y, 20.0f, 20.0f, 0.0f, false, texture), normalTexture(texture), deadTexture(textureDead), direction(0.0f, 0.0f), levelRef(levelRef), pacmanPos({})
 	{
 		StateIdle* initialState = new StateIdle(3000);
 		SetState(*initialState);
 		initialState->SetContext(this);
 		initialState->EntryActions();
+	}
+
+	void Ghost::Reset(float x, float y)
+	{
+        glm::vec2& pos = this->GetPosition();
+        pos.x = x;
+        pos.y = y;
+		direction = { 0.0f, 0.0f };
+		ChangeState(new StateIdle(3000));
 	}
 
 	void Ghost::OnUpdate(float deltaTime)
@@ -40,6 +51,16 @@ namespace PacmanGame
 	void Ghost::StartHunting()
 	{
 		ChangeState(new StateHunting());
+	}
+
+	void Ghost::StartScattering()
+	{
+		ChangeState(new StateScatter(6000));
+	}
+
+	void Ghost::ReturnToSpawn()
+	{
+		ChangeState(new StateDead());
 	}
 
 	Cell* Ghost::GetPacmanCell()

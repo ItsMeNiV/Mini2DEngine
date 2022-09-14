@@ -83,16 +83,16 @@ namespace PacmanGame
         return *levelCellsPtrBase;
     }
 
-    Cell Level::GetGhostSpawnCell()
+    Cell* Level::GetGhostSpawnCell()
     {
         for (uint16_t i = 0; i <= levelSize; i++)
         {
-            Cell c = levelCellsPtrBase[i];
+            Cell& c = levelCellsPtrBase[i];
 
             if (c.type == CellType::GhostSpawn)
-                return c;
+                return &c;
         }
-        return *levelCellsPtrBase;
+        return levelCellsPtrBase;
     }
 
     void Level::CheckWallCollision(MiniEngine::Ref<MiniEngine::Entity> entity, const glm::vec2& direction)
@@ -141,6 +141,20 @@ namespace PacmanGame
             pacmanEntity->PowerUpCollected();
         }
     }
+
+    bool Level::CheckGhostCollision(MiniEngine::Ref<Pacman> pacmanEntity, MiniEngine::Ref<MiniEngine::Entity> ghostEntity)
+    {
+        uint16_t pacmanX = (uint16_t)pacmanEntity->GetPosition().x / 20;
+        uint16_t pacmanY = (uint16_t)pacmanEntity->GetPosition().y / 20;
+        uint16_t ghostX = (uint16_t)ghostEntity->GetPosition().x / 20;
+        uint16_t ghostY = (uint16_t)ghostEntity->GetPosition().y / 20;
+
+        Cell& pacmanCell = levelCellsPtrBase[pacmanY * 40 + pacmanX];
+        Cell& ghostCell = levelCellsPtrBase[ghostY * 40 + ghostX];
+
+        return pacmanCell.id == ghostCell.id;
+    }
+
     std::vector<Cell*> Level::GetCellsByCellType(CellType cellType)
     {
         std::vector<Cell*> returnVector;

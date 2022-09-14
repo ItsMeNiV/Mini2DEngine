@@ -9,12 +9,8 @@ namespace PacmanGame
 	public:
 		StateHunting() : StateGhost("StateHunting") {}
 
-		virtual void EntryActions() //Move from Spawn field to maze (TODO: Think of another solution instead of teleporting)
+		virtual void EntryActions()
 		{
-			Cell* mazeEntranceCell = ((Ghost*)GetContext())->GetLevelRef()->GetCellsByCellType(CellType::MazeEntrance)[0];
-			glm::vec2& pos = ((Ghost*)GetContext())->GetPosition();
-			pos.x = (mazeEntranceCell->x * 20.0f) + 10;
-			pos.y = (mazeEntranceCell->y * 20.0f) + 10;
 		}
 
 		virtual void OnUpdate(float deltaTime)

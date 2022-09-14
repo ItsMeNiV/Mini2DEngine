@@ -2,6 +2,8 @@
 #include "MiniEngine.h"
 #include "Level.h"
 #include "Entities/Ghost/BlinkyGhost.h"
+#include "Entities/Ghost/StateHunting.h"
+#include "Entities/Pacman/StatePoweredUp.h"
 #include "Pathfinding/Pathfinder.h"
 
 namespace PacmanGame
@@ -11,10 +13,10 @@ namespace PacmanGame
         : Layer("PacmanGameLayer"), camera(MiniEngine::CreateRef<MiniEngine::OrthographicCamera>(800, 600)), scene(MiniEngine::CreateRef<MiniEngine::Scene>(*camera)),
         gameLevel(MiniEngine::CreateRef<Level>()),
         pacmanEntity(MiniEngine::CreateRef<Pacman>((gameLevel->GetPacmanSpawnCell().x * 20) + 10, (gameLevel->GetPacmanSpawnCell().y * 20) + 10, MiniEngine::Texture::Create("assets/pictures/pacman.png"))),
-        gameWon(false)
+        gameWon(false), gameLost(false)
     {
         Pathfinder::GetInstance().Init(gameLevel->GetLevelCellsPtrBase(), gameLevel->GetLevelSize());
-        ghostEntities.push_back(MiniEngine::CreateRef<BlinkyGhost>((gameLevel->GetGhostSpawnCell().x * 20) + 10, (gameLevel->GetGhostSpawnCell().y * 20) + 10, gameLevel));
+        ghostEntities.push_back(MiniEngine::CreateRef<BlinkyGhost>((gameLevel->GetGhostSpawnCell()->x * 20) + 10, (gameLevel->GetGhostSpawnCell()->y * 20) + 10, gameLevel));
     }
 
     void PacmanGameLayer::OnAttach()
@@ -36,7 +38,7 @@ namespace PacmanGame
 
     void PacmanGameLayer::OnUpdate(float deltaTime)
     {
-        if (!gameWon)
+        if (!gameWon && !gameLost)
         {
             scene->OnUpdate(deltaTime);
             gameLevel->CheckWallCollision(pacmanEntity, pacmanEntity->GetDirection());
@@ -46,11 +48,38 @@ namespace PacmanGame
             {
                 g->SetPacmanPos(pacmanEntity->GetPosition());
                 gameLevel->CheckWallCollision(g, g->GetDirection());
+                if (gameLevel->CheckGhostCollision(pacmanEntity, g) && dynamic_cast<StateHunting*>(g->GetState()) != nullptr)
+                {
+                    if (dynamic_cast<StatePoweredUp*>(pacmanEntity->GetState()) != nullptr)
+                    {
+                        g->ReturnToSpawn();
+                    }
+                    else
+                    {
+                        pacmanEntity->RemoveLife();
+                        std::cout << std::to_string(pacmanEntity->GetLives()) << " Lives left" << std::endl;
+                        if (pacmanEntity->GetLives() == 0)
+                        {
+                            gameLost = true;
+                            std::cout << "You Lost!" << std::endl;
+                            break;
+                        }
+                        ResetGame();
+                    }
+                }
+
             }
 
             CheckWin();
         }
         MiniEngine::Renderer2D::DrawScene(*scene);
+    }
+
+    void PacmanGameLayer::ResetGame()
+    {
+        pacmanEntity->Reset((gameLevel->GetPacmanSpawnCell().x * 20) + 10, (gameLevel->GetPacmanSpawnCell().y * 20) + 10);
+        for (MiniEngine::Ref<Ghost> g : ghostEntities)
+            g->Reset((gameLevel->GetGhostSpawnCell()->x * 20) + 10, (gameLevel->GetGhostSpawnCell()->y * 20) + 10);
     }
 
     void PacmanGameLayer::CheckWin()
@@ -61,6 +90,7 @@ namespace PacmanGame
         if (coinCells.size() == 0 && powerUpCells.size() == 0)
         {
             gameWon = true;
+            std::cout << "You won!" << std::endl;
         }
     }
 
