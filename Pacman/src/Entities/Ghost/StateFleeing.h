@@ -13,8 +13,7 @@ namespace PacmanGame
         {
             Ghost* context = ((Ghost*)GetContext());
             context->SetTexture(context->GetFleeingTexture());
-
-            context->UpdatePathTo(GetRandomNonWallCell());
+            targetCell = GetRandomNonWallCell();
 
             timer.StartTimer();
         }
@@ -34,8 +33,10 @@ namespace PacmanGame
             Cell* currentCell = &context->GetLevelRef()->GetLevelCellsPtrBase()[ghostY * 40 + ghostX];
             if (currentCell->id == context->GetTargetCell()->id)
             {
-                context->UpdatePathTo(GetRandomNonWallCell());
+                targetCell = GetRandomNonWallCell();
             }
+
+            context->UpdatePathTo(targetCell);
 
             if (timerOver)
             {
@@ -57,6 +58,7 @@ namespace PacmanGame
         }
 
     private:
+        Cell* targetCell;
         MiniEngine::Timer timer;
         std::atomic_bool timerOver = false;
     };
