@@ -1,5 +1,5 @@
 #pragma once
-#include "../../Rendering/IndexBuffer.h"
+#include "MiniEngine/Rendering/IndexBuffer.h"
 
 namespace MiniEngine
 {

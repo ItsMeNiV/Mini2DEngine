@@ -1,7 +1,8 @@
 #include "mepch.h"
-#include "IndexBuffer.h"
-#include "RenderAPI.h"
-#include <MiniEngine/Platform/OpenGL/OpenGLIndexBuffer.h>
+#include "MiniEngine/Rendering/IndexBuffer.h"
+
+#include "MiniEngine/Rendering/RenderAPI.h"
+#include "MiniEngine/Platform/OpenGL/OpenGLIndexBuffer.h"
 
 namespace MiniEngine
 {

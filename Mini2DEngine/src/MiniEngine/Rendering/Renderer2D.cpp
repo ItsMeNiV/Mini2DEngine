@@ -1,9 +1,10 @@
 #include "mepch.h"
-#include "Renderer2D.h"
-#include "../Core/Core.h"
+#include "MiniEngine/Rendering/Renderer2D.h"
+
 #include "glm/gtc/matrix_transform.hpp"
-#include "Texture.h"
-#include "RenderCommand.h"
+#include "MiniEngine/Core/Core.h"
+#include "MiniEngine/Rendering/Texture.h"
+#include "MiniEngine/Rendering/RenderCommand.h"
 
 namespace MiniEngine
 {

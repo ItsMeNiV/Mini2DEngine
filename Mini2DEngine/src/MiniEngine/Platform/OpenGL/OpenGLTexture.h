@@ -1,5 +1,5 @@
 #pragma once
-#include "../../Rendering/Texture.h"
+#include "MiniEngine/Rendering/Texture.h"
 
 namespace MiniEngine
 {

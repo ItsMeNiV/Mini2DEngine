@@ -1,10 +1,9 @@
 #include "mepch.h"
-#include "WindowsWindow.h"
+#include "MiniEngine/Platform/Windows/WindowsWindow.h"
 
+#include "GLFW/glfw3.h"
 #include "MiniEngine/Event/WindowEvents.h"
 #include "MiniEngine/Event/KeyEvents.h"
-
-#include <GLFW/glfw3.h>
 
 namespace MiniEngine
 {

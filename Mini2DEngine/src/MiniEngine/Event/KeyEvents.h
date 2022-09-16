@@ -1,6 +1,5 @@
 #pragma once
-
-#include "Event.h"
+#include "MiniEngine/Event/Event.h"
 
 namespace MiniEngine
 {

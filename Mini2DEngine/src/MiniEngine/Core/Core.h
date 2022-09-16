@@ -1,5 +1,5 @@
 #pragma once
-#include <mepch.h>
+#include "mepch.h"
 
 #ifndef ME_PLATFORM_WINDOWS
 	#error Only Windows is supported!

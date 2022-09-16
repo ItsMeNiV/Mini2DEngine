@@ -1,7 +1,8 @@
 #include "mepch.h"
 #include "OpenGLRenderAPI.h"
+
 #include "glm/glm.hpp"
-#include <glad/glad.h>
+#include "glad/glad.h"
 
 namespace MiniEngine
 {

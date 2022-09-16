@@ -1,7 +1,7 @@
 #pragma once
-#include "MiniEngine.h"
-#include "StateGhost.h"
-#include "../../Level.h"
+#include <MiniEngine.h>
+#include "Entities/Ghost/StateGhost.h"
+#include "Level.h"
 
 namespace PacmanGame
 {

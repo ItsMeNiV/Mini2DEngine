@@ -1,6 +1,6 @@
 #pragma once
-#include "MiniEngine.h"
-#include "StatePacman.h"
+#include <MiniEngine.h>
+#include "Entities/Pacman/StatePacman.h"
 
 namespace PacmanGame
 {

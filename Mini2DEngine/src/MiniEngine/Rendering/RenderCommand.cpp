@@ -1,7 +1,8 @@
 #include "mepch.h"
-#include "RenderCommand.h"
-#include "../Core/Core.h"
-#include "RenderAPI.h"
+#include "MiniEngine/Rendering/RenderCommand.h"
+
+#include "MiniEngine/Core/Core.h"
+#include "MiniEngine/Rendering/RenderAPI.h"
 
 namespace MiniEngine
 {

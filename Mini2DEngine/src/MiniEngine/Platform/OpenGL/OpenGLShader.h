@@ -1,6 +1,6 @@
 #pragma once
-#include "../../Rendering/Shader.h"
 #include "glm/glm.hpp"
+#include "MiniEngine/Rendering/Shader.h"
 
 namespace MiniEngine
 {

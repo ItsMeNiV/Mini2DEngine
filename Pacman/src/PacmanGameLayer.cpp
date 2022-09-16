@@ -1,6 +1,5 @@
 #include "PacmanGameLayer.h"
-#include "MiniEngine.h"
-#include "Level.h"
+
 #include "Entities/Ghost/BlinkyGhost.h"
 #include "Entities/Ghost/StateDead.h"
 #include "Entities/Pacman/StatePoweredUp.h"

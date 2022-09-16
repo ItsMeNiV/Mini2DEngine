@@ -9,7 +9,7 @@ project "Pacman"
 
 	files { "src/**.h", "src/**.cpp" }
 
-	includedirs { "%{wks.location}/Mini2DEngine/src", "%{wks.location}/Mini2DEngine/vendor", "%{wks.location}/Mini2DEngine/vendor/glm" }
+	includedirs { "src", "%{wks.location}/Mini2DEngine/src", "%{wks.location}/Mini2DEngine/vendor", "%{wks.location}/Mini2DEngine/vendor/glm" }
 
 	links { "Mini2DEngine" }
 

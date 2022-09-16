@@ -1,7 +1,8 @@
 #include "mepch.h"
-#include "Texture.h"
-#include "RenderAPI.h"
-#include "../Platform/OpenGL/OpenGLTexture.h"
+#include "MiniEngine/Rendering/Texture.h"
+
+#include "MiniEngine/Rendering/RenderAPI.h"
+#include "MiniEngine/Platform/OpenGL/OpenGLTexture.h"
 
 namespace MiniEngine
 {

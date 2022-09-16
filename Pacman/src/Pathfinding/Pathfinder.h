@@ -1,6 +1,6 @@
 #pragma once
-#include "MiniEngine.h"
-#include "../Level.h"
+#include <MiniEngine.h>
+#include "Level.h"
 
 namespace PacmanGame
 {

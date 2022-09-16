@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
-#include "Entity.h"
-#include "OrthographicCamera.h"
+#include "MiniEngine/Rendering/Entity.h"
+#include "MiniEngine/Rendering/OrthographicCamera.h"
 
 namespace MiniEngine
 {

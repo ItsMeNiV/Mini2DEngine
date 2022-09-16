@@ -1,5 +1,5 @@
 #pragma once
-#include "StateGhost.h"
+#include "Entities/Ghost/StateGhost.h"
 
 namespace PacmanGame
 {

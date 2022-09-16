@@ -1,7 +1,7 @@
 #include "mepch.h"
-#include "OpenGLTexture.h"
 #include "glad/glad.h"
 #include "stb_image.h"
+#include "MiniEngine/Platform/OpenGL/OpenGLTexture.h"
 
 namespace MiniEngine
 {

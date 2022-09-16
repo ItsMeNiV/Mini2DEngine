@@ -1,7 +1,8 @@
 #include "mepch.h"
-#include "GraphicsContext.h"
-#include "RenderAPI.h"
-#include "../Platform/OpenGL/OpenGLContext.h"
+#include "MiniEngine/Rendering/GraphicsContext.h"
+
+#include "MiniEngine/Rendering/RenderAPI.h"
+#include "MiniEngine/Platform/OpenGL/OpenGLContext.h"
 
 namespace MiniEngine
 {

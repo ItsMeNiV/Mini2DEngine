@@ -1,6 +1,6 @@
 #pragma once
-#include "../../Rendering/GraphicsContext.h"
-#include <GLFW/glfw3.h>
+#include "GLFW/glfw3.h"
+#include "MiniEngine/Rendering/GraphicsContext.h"
 
 namespace MiniEngine
 {

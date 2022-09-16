@@ -1,6 +1,6 @@
 #include "mepch.h"
-#include "OpenGLVertexArray.h"
 #include "glad/glad.h"
+#include "MiniEngine/Platform/OpenGL/OpenGLVertexArray.h"
 
 namespace MiniEngine
 {

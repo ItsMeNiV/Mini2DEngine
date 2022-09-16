@@ -1,6 +1,5 @@
 #pragma once
-
-#include "Application.h"
+#include "MiniEngine/Core/Application.h"
 
 #ifdef ME_PLATFORM_WINDOWS
 

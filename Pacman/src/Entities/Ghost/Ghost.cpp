@@ -1,9 +1,10 @@
-#include "Ghost.h"
-#include "StateIdle.h"
-#include "StateHunting.h"
-#include "StateScatter.h"
-#include "StateDead.h"
-#include "../../Pathfinding/Pathfinder.h"
+#include "Entities/Ghost/Ghost.h"
+
+#include "Entities/Ghost/StateIdle.h"
+#include "Entities/Ghost/StateHunting.h"
+#include "Entities/Ghost/StateScatter.h"
+#include "Entities/Ghost/StateDead.h"
+#include "Pathfinding/Pathfinder.h"
 
 namespace PacmanGame
 {

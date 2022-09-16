@@ -1,13 +1,13 @@
 #pragma once
 #include "mepch.h"
-#include "VertexArray.h"
-#include "Shader.h"
-#include "IndexBuffer.h"
-#include "Texture.h"
-#include "../Core/Core.h"
-#include "OrthographicCamera.h"
 #include "glm/glm.hpp"
-#include "Scene.h"
+#include "MiniEngine/Core/Core.h"
+#include "MiniEngine/Rendering/VertexArray.h"
+#include "MiniEngine/Rendering/Shader.h"
+#include "MiniEngine/Rendering/IndexBuffer.h"
+#include "MiniEngine/Rendering/Texture.h"
+#include "MiniEngine/Rendering/OrthographicCamera.h"
+#include "MiniEngine/Rendering/Scene.h"
 
 namespace MiniEngine
 {

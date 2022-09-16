@@ -1,6 +1,6 @@
 #pragma once
-#include "StateGhost.h"
-#include "../../Pathfinding/Pathfinder.h"
+#include "Entities/Ghost/StateGhost.h"
+#include "Pathfinding/Pathfinder.h"
 
 namespace PacmanGame
 {

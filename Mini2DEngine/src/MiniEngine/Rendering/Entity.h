@@ -1,6 +1,6 @@
 #pragma once
-#include "../Core/Core.h"
-#include "../Utils/UUID.h"
+#include "MiniEngine/Core/Core.h"
+#include "MiniEngine/Utils/UUID.h"
 
 namespace MiniEngine
 {

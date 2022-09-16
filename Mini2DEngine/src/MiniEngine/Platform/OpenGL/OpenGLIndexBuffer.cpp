@@ -1,5 +1,6 @@
 #include "mepch.h"
 #include "OpenGLIndexBuffer.h"
+
 #include "glad/glad.h"
 
 namespace MiniEngine

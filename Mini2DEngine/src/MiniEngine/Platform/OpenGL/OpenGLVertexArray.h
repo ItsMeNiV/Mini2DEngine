@@ -1,5 +1,5 @@
 #pragma once
-#include "../../Rendering/VertexArray.h"
+#include "MiniEngine/Rendering/VertexArray.h"
 
 namespace MiniEngine
 {

@@ -1,9 +1,8 @@
 #pragma once
 #include "mepch.h"
-
 #include "MiniEngine/Core/Core.h"
-#include <MiniEngine/Event/Event.h>
-#include <MiniEngine/Event/WindowEvents.h>
+#include "MiniEngine/Event/Event.h"
+#include "MiniEngine/Event/WindowEvents.h"
 
 namespace MiniEngine
 {

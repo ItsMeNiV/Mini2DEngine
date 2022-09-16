@@ -1,7 +1,7 @@
 #pragma once
-#include "../Core/Core.h"
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
+#include "MiniEngine/Core/Core.h"
+#include "MiniEngine/Rendering/VertexBuffer.h"
+#include "MiniEngine/Rendering/IndexBuffer.h"
 
 namespace MiniEngine
 {

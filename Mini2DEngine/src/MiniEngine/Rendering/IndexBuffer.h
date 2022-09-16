@@ -1,5 +1,5 @@
 #pragma once
-#include "../Core/Core.h"
+#include "MiniEngine/Core/Core.h"
 
 namespace MiniEngine
 {

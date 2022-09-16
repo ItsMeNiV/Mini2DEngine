@@ -1,7 +1,8 @@
 #include "mepch.h"
-#include "VertexBuffer.h"
-#include "RenderAPI.h"
-#include "../Platform/OpenGL/OpenGLVertexBuffer.h"
+#include "MiniEngine/Rendering/VertexBuffer.h"
+
+#include "MiniEngine/Rendering/RenderAPI.h"
+#include "MiniEngine/Platform/OpenGL/OpenGLVertexBuffer.h"
 
 namespace MiniEngine
 {

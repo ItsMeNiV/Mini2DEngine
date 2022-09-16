@@ -1,8 +1,8 @@
 #pragma once
+#include "GLFW/glfw3.h"
 #include "MiniEngine/Core/Window.h"
-#include <GLFW/glfw3.h>
-#include <MiniEngine/Rendering/GraphicsContext.h>
-#include "../../Rendering/OrthographicCamera.h"
+#include "MiniEngine/Rendering/GraphicsContext.h"
+#include "MiniEngine/Rendering/OrthographicCamera.h"
 
 namespace MiniEngine
 {

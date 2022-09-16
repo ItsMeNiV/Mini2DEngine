@@ -1,8 +1,8 @@
 #include "mepch.h"
 #include "MiniEngine/Core/Input.h"
 
-#include "MiniEngine/Core/Application.h"
 #include "GLFW/glfw3.h"
+#include "MiniEngine/Core/Application.h"
 
 namespace MiniEngine
 {

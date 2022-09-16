@@ -1,6 +1,6 @@
 #pragma once
-#include "../Core/Core.h"
 #include <string>
+#include "MiniEngine/Core/Core.h"
 
 namespace MiniEngine
 {

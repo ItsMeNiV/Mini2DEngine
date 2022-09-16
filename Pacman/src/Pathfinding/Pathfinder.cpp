@@ -1,4 +1,4 @@
-#include "Pathfinder.h"
+#include "Pathfinding/Pathfinder.h"
 
 #define G_HORVER 10
 

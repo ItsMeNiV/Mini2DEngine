@@ -1,10 +1,7 @@
 #include "mepch.h"
-#include "Application.h"
-
+#include "MiniEngine/Core/Application.h"
 #include "MiniEngine/Event/WindowEvents.h"
-
 #include "MiniEngine/Rendering/Renderer2D.h"
-
 #include "MiniEngine/Utils/PlatformUtils.h"
 
 namespace MiniEngine

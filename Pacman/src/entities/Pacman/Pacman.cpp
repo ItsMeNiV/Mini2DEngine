@@ -1,7 +1,7 @@
-#include "Pacman.h"
-#include "MiniEngine.h"
-#include "StateNormal.h"
-#include "StatePoweredUp.h"
+#include "Entities/Pacman/Pacman.h"
+
+#include "Entities/Pacman/StateNormal.h"
+#include "Entities/Pacman/StatePoweredUp.h"
 
 namespace PacmanGame
 {

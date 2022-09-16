@@ -1,6 +1,6 @@
 #pragma once
-#include "../../Rendering/RenderAPI.h"
 #include "glm/glm.hpp"
+#include "MiniEngine/Rendering/RenderAPI.h"
 
 namespace MiniEngine
 {

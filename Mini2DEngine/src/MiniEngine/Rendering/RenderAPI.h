@@ -1,7 +1,7 @@
 #pragma once
-#include "../Core/Core.h"
-#include "VertexArray.h"
 #include "glm/glm.hpp"
+#include "MiniEngine/Core/Core.h"
+#include "MiniEngine/Rendering/VertexArray.h"
 
 namespace MiniEngine
 {

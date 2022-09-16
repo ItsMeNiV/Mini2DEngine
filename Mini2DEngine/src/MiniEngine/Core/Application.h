@@ -1,8 +1,7 @@
 #pragma once
-
-#include "Core.h"
-#include <MiniEngine/Core/Window.h>
-#include <MiniEngine/Core/LayerStack.h>
+#include "MiniEngine/Core/Core.h"
+#include "MiniEngine/Core/Window.h"
+#include "MiniEngine/Core/LayerStack.h"
 
 namespace MiniEngine
 {

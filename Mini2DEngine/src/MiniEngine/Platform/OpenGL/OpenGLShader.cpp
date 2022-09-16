@@ -1,12 +1,13 @@
 #include "mepch.h"
 #include "OpenGLShader.h"
-#include <glad/glad.h>
 
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include <filesystem>
+
+#include "glad/glad.h"
 
 namespace MiniEngine
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include "MiniEngine.h"
+#include <MiniEngine.h>
 #include "Level.h"
 #include "Entities/Pacman/Pacman.h"
 #include "Entities/Ghost/Ghost.h"

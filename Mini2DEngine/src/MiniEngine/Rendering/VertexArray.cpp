@@ -1,7 +1,8 @@
 #include "mepch.h"
-#include "VertexArray.h"
-#include "RenderAPI.h"
-#include "../Platform/OpenGL/OpenGLVertexArray.h"
+#include "MiniEngine/Rendering/VertexArray.h"
+
+#include "MiniEngine/Rendering/RenderAPI.h"
+#include "MiniEngine/Platform/OpenGL/OpenGLVertexArray.h"
 
 namespace MiniEngine
 {

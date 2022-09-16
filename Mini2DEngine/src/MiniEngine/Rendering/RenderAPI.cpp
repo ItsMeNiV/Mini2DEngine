@@ -1,7 +1,8 @@
 #include "mepch.h"
-#include "../Core/Core.h"
-#include "RenderAPI.h"
-#include <MiniEngine/Platform/OpenGL/OpenGLRenderAPI.h>
+#include "MiniEngine/Rendering/RenderAPI.h"
+
+#include "MiniEngine/Core/Core.h"
+#include "MiniEngine/Platform/OpenGL/OpenGLRenderAPI.h"
 
 namespace MiniEngine
 {

@@ -1,6 +1,6 @@
 #pragma once
 #include "mepch.h"
-#include "Core.h"
+#include "MiniEngine/Core/core.h"
 
 namespace MiniEngine
 {
