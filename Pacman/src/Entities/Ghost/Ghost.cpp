@@ -1,15 +1,17 @@
 #include "Entities/Ghost/Ghost.h"
 
+#include <cmath>
 #include "Entities/Ghost/StateIdle.h"
 #include "Entities/Ghost/StateHunting.h"
 #include "Entities/Ghost/StateScatter.h"
+#include "Entities/Ghost/StateFleeing.h"
 #include "Entities/Ghost/StateDead.h"
 #include "Pathfinding/Pathfinder.h"
 
 namespace PacmanGame
 {
 	Ghost::Ghost(std::string&& name, float x, float y, MiniEngine::Ref<MiniEngine::Texture> texture, MiniEngine::Ref<Level> levelRef)
-		: MiniEngine::Entity(std::move(name), x, y, 20.0f, 20.0f, 0.0f, false, texture), normalTexture(texture), deadTexture(MiniEngine::Texture::Create("assets/pictures/ghost_dead.png")), scatterTexture(MiniEngine::Texture::Create("assets/pictures/ghost_scatter.png")), direction(0.0f, 0.0f), levelRef(levelRef), pacmanPos({})
+		: MiniEngine::Entity(std::move(name), x, y, 20.0f, 20.0f, 0.0f, false, texture), normalTexture(texture), deadTexture(MiniEngine::Texture::Create("assets/pictures/ghost_dead.png")), fleeingTexture(MiniEngine::Texture::Create("assets/pictures/ghost_fleeing.png")), direction(0.0f, 0.0f), levelRef(levelRef), pacmanPos({})
 	{
 		StateIdle* initialState = new StateIdle(3000);
 		SetState(*initialState);
@@ -47,6 +49,13 @@ namespace PacmanGame
 		glm::vec2& pos = this->GetPosition();
 		float step = speed * deltaTime;
 		pos += direction * step;
+
+		float modX = fmod(pos.x - 10, 20.0f);
+		float modY = fmod(pos.y - 10, 20.0f);
+		if (modX != 0 && modX <= 0.1f && modX >= -0.1f)
+			pos.x += modX * (direction.x * -1);
+		if (modY != 0 && modY <= 0.1f && modY >= -0.1f)
+			pos.y += modY * direction.y;
 	}
 
 	void Ghost::StartHunting()
@@ -54,9 +63,14 @@ namespace PacmanGame
 		ChangeState(new StateHunting());
 	}
 
-	void Ghost::StartScattering(bool useScatterTexture)
+	void Ghost::StartScattering()
 	{
-		ChangeState(new StateScatter(6000, useScatterTexture));
+		ChangeState(new StateScatter(6000));
+	}
+
+	void Ghost::StartFleeing()
+	{
+		ChangeState(new StateFleeing(6000));
 	}
 
 	void Ghost::ReturnToSpawn()

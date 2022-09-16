@@ -1,7 +1,6 @@
 #include "PacmanApp.h"
 
 #include <MiniEngine/Core/EntryPoint.h>
-#include "PacmanGameLayer.h"
 
 MiniEngine::Application* MiniEngine::CreateApplication()
 {

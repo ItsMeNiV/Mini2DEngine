@@ -1,5 +1,6 @@
 #pragma once
 #include <MiniEngine.h>
+#include "PacmanGameLayer.h"
 
 namespace PacmanGame
 {

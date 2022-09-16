@@ -1,5 +1,6 @@
 #include "Entities/Pacman/Pacman.h"
 
+#include <cmath>
 #include "Entities/Pacman/StateNormal.h"
 #include "Entities/Pacman/StatePoweredUp.h"
 
@@ -96,10 +97,12 @@ namespace PacmanGame
 		float step = speed * deltaTime;
 		pos += direction * step;
 
-		if ((int)pos.x - 10 % 20 != 0 && (int)pos.x - 10 % 20 <= 0.1)
-			pos.x = (int)pos.x + (int)pos.x % 20;
-		if ((int)pos.y - 10 % 20 != 0 && (int)pos.y - 10 % 20 <= 0.1)
-			pos.y = (int)pos.y + (int)pos.y % 20;
+		float modX = fmod(pos.x - 10, 20.0f);
+		float modY = fmod(pos.y - 10, 20.0f);
+		if (modX != 0 && modX <= 0.1f && modX >= -0.1f)
+			pos.x += modX * (direction.x * -1);
+		if (modY != 0 && modY <= 0.1f && modY >= -0.1f)
+			pos.y += modY * (direction.y * -1);
 
 		GetState()->OnUpdate();
 	}

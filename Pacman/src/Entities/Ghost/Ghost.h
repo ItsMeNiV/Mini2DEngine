@@ -19,7 +19,7 @@ namespace PacmanGame
 		virtual Cell* GetTargetScatterCell() = 0; //Override in each specific Ghost-Implementation
 		MiniEngine::Ref<MiniEngine::Texture> GetNormalTexture() { return normalTexture; }
 		MiniEngine::Ref<MiniEngine::Texture> GetDeadTexture() { return deadTexture; }
-		MiniEngine::Ref<MiniEngine::Texture> GetScatterTexture() { return scatterTexture; }
+		MiniEngine::Ref<MiniEngine::Texture> GetFleeingTexture() { return fleeingTexture; }
 		void SetSpeed(float speed) { this->speed = speed; }
 
 		void Reset(float x, float y);
@@ -32,13 +32,14 @@ namespace PacmanGame
 
 		//State Events
 		void StartHunting();
-		void StartScattering(bool useScatterTexture);
+		void StartScattering();
+		void StartFleeing();
 		void ReturnToSpawn();
 
 	private:
 		MiniEngine::Ref<MiniEngine::Texture> normalTexture;
 		MiniEngine::Ref<MiniEngine::Texture> deadTexture;
-		MiniEngine::Ref<MiniEngine::Texture> scatterTexture;
+		MiniEngine::Ref<MiniEngine::Texture> fleeingTexture;
 		MiniEngine::Ref<Level> levelRef;
 		float speed = 100.0f;
 		glm::vec2 direction;

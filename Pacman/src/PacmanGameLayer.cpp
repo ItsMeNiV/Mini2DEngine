@@ -45,7 +45,7 @@ namespace PacmanGame
             if (gameLevel->CheckPacmanPowerUpCollision(pacmanEntity, scene))
             {
                 for (MiniEngine::Ref<Ghost> g : ghostEntities)
-                    g->StartScattering(true); //Todo: Change to fleeing
+                    g->StartFleeing();
             }
 
             for (MiniEngine::Ref<Ghost> g : ghostEntities)
