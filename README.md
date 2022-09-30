@@ -4,7 +4,7 @@ Small 2D Engine written in C++ using OpenGL. This project was used to learn abou
 The Project features a small Pacman-Clone made using the engine. The game is still very very buggy and the Engine's functionality is very limited.
 As of now, there is no plan to continue the development of this Project as I will continue with different learning projects.
 
-![Screenshot](/Resources/Screenshot_Pacman.png.png?raw=true "Pacman Game")
+![Screenshot](/Resources/Screenshot_Pacman.png?raw=true "Pacman Game")
 
 ***
 
