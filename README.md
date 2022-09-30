@@ -1,10 +1,10 @@
-# Mini2DEngine [![License](https://img.shields.io/github/license/ItsMeNiV/Mini2DEngine)](https://github.com/ItsMeNiv/Mini2DEngine/blob/main/LICENSE)
+# Mini2DEngine [![GitHub](https://img.shields.io/github/license/ItsMeNiV/Mini2DEngine?style=flat-square)](https://github.com/ItsMeNiv/Mini2DEngine/blob/main/LICENSE)
 Small 2D Engine written in C++ using OpenGL. This project was used to learn about Game Engine development, following [The Cherno's Game Engine Series on Youtube](https://www.youtube.com/playlist?list=PLlrATfBNZ98dC-V-N3m0Go4deliWHPFwT)
 
 The Project features a small Pacman-Clone made using the engine. The game is still very very buggy and the Engine's functionality is very limited.
 As of now, there is no plan to continue the development of this Project as I will continue with different learning projects.
 
-![Screenshot](/Resources/Screenshot_Pacman.png.png?raw=true "Pacman Game")
+![Screenshot](/Resources/Screenshot_Pacman.png?raw=true "Pacman Game")
 
 ***
 
