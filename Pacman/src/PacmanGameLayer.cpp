@@ -1,6 +1,9 @@
 #include "PacmanGameLayer.h"
 
 #include "Entities/Ghost/BlinkyGhost.h"
+#include "Entities/Ghost/PinkyGhost.h"
+#include "Entities/Ghost/InkyGhost.h"
+#include "Entities/Ghost/ClydeGhost.h"
 #include "Entities/Ghost/StateDead.h"
 #include "Entities/Pacman/StatePoweredUp.h"
 #include "Pathfinding/Pathfinder.h"
@@ -15,7 +18,11 @@ namespace PacmanGame
         gameWon(false), gameLost(false)
     {
         Pathfinder::GetInstance().Init(gameLevel->GetLevelCellsPtrBase(), gameLevel->GetLevelSize());
-        ghostEntities.push_back(MiniEngine::CreateRef<BlinkyGhost>((gameLevel->GetGhostSpawnCell()->x * 20) + 10, (gameLevel->GetGhostSpawnCell()->y * 20) + 10, gameLevel));
+        Cell* mazeEntranceCell = gameLevel->GetCellsByCellType(CellType::MazeEntrance)[0];
+        ghostEntities.push_back(MiniEngine::CreateRef<BlinkyGhost>((mazeEntranceCell->x * 20) + 10, (mazeEntranceCell->y * 20) + 10, gameLevel));
+        ghostEntities.push_back(MiniEngine::CreateRef<PinkyGhost>((gameLevel->GetGhostSpawnCell()->x * 20) + 10, (gameLevel->GetGhostSpawnCell()->y * 20) + 10, gameLevel));
+        ghostEntities.push_back(MiniEngine::CreateRef<InkyGhost>((gameLevel->GetGhostSpawnCell()->x * 20) + 10, (gameLevel->GetGhostSpawnCell()->y * 20) + 10, gameLevel));
+        ghostEntities.push_back(MiniEngine::CreateRef<ClydeGhost>((gameLevel->GetGhostSpawnCell()->x * 20) + 10, (gameLevel->GetGhostSpawnCell()->y * 20) + 10, gameLevel));
     }
 
     void PacmanGameLayer::OnAttach()
@@ -37,6 +44,8 @@ namespace PacmanGame
 
     void PacmanGameLayer::OnUpdate(float deltaTime)
     {
+        if (deltaTime > 0.2f)
+            deltaTime = 0.2f;
         if (!gameWon && !gameLost)
         {
             scene->OnUpdate(deltaTime);
@@ -51,6 +60,7 @@ namespace PacmanGame
             for (MiniEngine::Ref<Ghost> g : ghostEntities)
             {
                 g->SetPacmanPos(pacmanEntity->GetPosition());
+                g->SetPacmanDirection(pacmanEntity->GetDirection());
                 gameLevel->CheckWallCollision(g, g->GetDirection());
                 if (gameLevel->CheckGhostCollision(pacmanEntity, g) && dynamic_cast<StateDead*>(g->GetState()) == nullptr)
                 {
@@ -83,7 +93,7 @@ namespace PacmanGame
     {
         pacmanEntity->Reset((gameLevel->GetPacmanSpawnCell().x * 20) + 10, (gameLevel->GetPacmanSpawnCell().y * 20) + 10);
         for (MiniEngine::Ref<Ghost> g : ghostEntities)
-            g->Reset((gameLevel->GetGhostSpawnCell()->x * 20) + 10, (gameLevel->GetGhostSpawnCell()->y * 20) + 10);
+            g->Reset();
     }
 
     void PacmanGameLayer::CheckWin()

@@ -10,11 +10,6 @@ namespace PacmanGame
 
 		virtual void EntryActions()
 		{ 
-            Cell* ghostSpawnCell = ((Ghost*)GetContext())->GetLevelRef()->GetGhostSpawnCell();
-            glm::vec2& pos = ((Ghost*)GetContext())->GetPosition();
-            pos.x = (ghostSpawnCell->x * 20.0f) + 10;
-            pos.y = (ghostSpawnCell->y * 20.0f) + 10;
-
 			timer.StartTimer();
 		}
 

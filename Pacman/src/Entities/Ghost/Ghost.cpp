@@ -10,20 +10,22 @@
 
 namespace PacmanGame
 {
-	Ghost::Ghost(std::string&& name, float x, float y, MiniEngine::Ref<MiniEngine::Texture> texture, MiniEngine::Ref<Level> levelRef)
-		: MiniEngine::Entity(std::move(name), x, y, 20.0f, 20.0f, 0.0f, false, texture), normalTexture(texture), deadTexture(MiniEngine::Texture::Create("assets/pictures/ghost_dead.png")), fleeingTexture(MiniEngine::Texture::Create("assets/pictures/ghost_fleeing.png")), direction(0.0f, 0.0f), levelRef(levelRef), pacmanPos({})
+	Ghost::Ghost(std::string&& name, float x, float y, MiniEngine::Ref<MiniEngine::Texture> texture, MiniEngine::Ref<Level> levelRef, StateGhost* initialState)
+		: MiniEngine::Entity(std::move(name), x, y, 20.0f, 20.0f, 0.0f, false, texture), normalTexture(texture), deadTexture(MiniEngine::Texture::Create("assets/pictures/ghost_dead.png")),
+		fleeingTexture(MiniEngine::Texture::Create("assets/pictures/ghost_fleeing.png")), direction(0.0f, 0.0f), levelRef(levelRef), pacmanPos({}), spawnCell(&(levelRef->GetLevelCellsPtrBase()[40 * ((int)y / 20) + (int)x / 20]))
 	{
-		StateIdle* initialState = new StateIdle(3000);
+		if (!initialState)
+			initialState = new StateIdle(3000);
 		SetState(*initialState);
 		initialState->SetContext(this);
 		initialState->EntryActions();
 	}
 
-	void Ghost::Reset(float x, float y)
+	void Ghost::Reset()
 	{
         glm::vec2& pos = this->GetPosition();
-        pos.x = x;
-        pos.y = y;
+        pos.x = (GetSpawnCell()->x * 20) + 10;
+        pos.y = (GetSpawnCell()->y * 20) + 10;
 		direction = { 0.0f, 0.0f };
 		ChangeState(new StateIdle(3000));
 	}
@@ -83,6 +85,11 @@ namespace PacmanGame
 		uint16_t cellX = (uint16_t)(pacmanPos.x - 10.0f) / 20;
 		uint16_t cellY = (uint16_t)(pacmanPos.y - 10.0f) / 20;
 		return &levelRef.get()->GetLevelCellsPtrBase()[cellY * 40 + cellX];
+	}
+
+	glm::vec2& Ghost::GetPacmanDirection()
+	{
+		return pacmanDir;
 	}
 
 	void Ghost::UpdatePathTo(Cell* cellTo)

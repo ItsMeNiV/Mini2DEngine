@@ -12,7 +12,7 @@ namespace PacmanGame
         {
             Ghost* context = ((Ghost*)GetContext());
             context->SetTexture(context->GetDeadTexture());
-            context->SetSpeed(200.0f);
+            context->SetSpeed(150.0f);
         }
 
         virtual void ExitActions()
@@ -20,6 +20,11 @@ namespace PacmanGame
             Ghost* context = ((Ghost*)GetContext());
             context->SetTexture(context->GetNormalTexture());
             context->SetSpeed(100.0f);
+
+            Cell* ghostSpawnCell = ((Ghost*)GetContext())->GetLevelRef()->GetGhostSpawnCell();
+            glm::vec2& pos = ((Ghost*)GetContext())->GetPosition();
+            pos.x = (ghostSpawnCell->x * 20.0f) + 10;
+            pos.y = (ghostSpawnCell->y * 20.0f) + 10;
         }
 
         virtual void OnUpdate(float deltaTime)
@@ -31,7 +36,7 @@ namespace PacmanGame
             int posY = context->GetPosition().y - 10;
             Cell& myCurrentCell = context->GetLevelRef()->GetLevelCellsPtrBase()[40 * ((int)posY / 20) + (int)posX / 20];
             if (myCurrentCell.type == CellType::MazeEntrance)
-                context->Reset((myCurrentCell.x * 20) + 10, (myCurrentCell.y * 20) + 10);
+                context->Reset();
         }
 
     };
